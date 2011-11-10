@@ -1,13 +1,14 @@
 <?php
-require_once(dirname(__FILE__) . '/config.php');
 
-#$database = "direve";
-#$map_type = "ini";
+$database = "direve";
+$map_type = "ini";
 
-$database = "lilacs";
-$map_type = "pft";
+$MAPPING_DIR = realpath(dirname(__FILE__) . '/../map/');
 
-$map_file = realpath(dirname(__FILE__) . '/../map/') . '/' . $database . '.' . $map_type;
+#$database = "lilacs";
+#$map_type = "pft";
+
+$map_file = $MAPPING_DIR . '/' . $database . '.' . $map_type;
 
 #print $map_file;
 
