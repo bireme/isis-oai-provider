@@ -2,7 +2,7 @@
 
 $MAPPING_DIR = realpath(dirname(__FILE__) . '/../map/');
 
-$CONFIG = parse_ini_file(dirname(__FILE__) . '/../oai-databases.ini.php', true);
+$CONFIG = parse_ini_file(dirname(__FILE__) . '/../oai-databases.php', true);
 
 foreach($CONFIG as $database) {
 	if(!file_exists($MAPPING_DIR . '/' . $database['mapping'])) {

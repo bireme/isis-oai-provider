@@ -1,6 +1,6 @@
 <?php
 
-$config = parse_ini_file( '../oai-config.ini.php', false);
+$config = parse_ini_file( '../oai-config.php', false);
 
 //Receber por parâmetro
 $database = '/home/projects/isis-oai-provider/bases/lilacs';
