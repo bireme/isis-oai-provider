@@ -1,32 +1,19 @@
 <?php
 
-$MAPPING_DIR = realpath(dirname(__FILE__) . '/../map/');
+require_once(dirname(__FILE__) . '/Log.php');
 
-$CONFIG = parse_ini_file(dirname(__FILE__) . '/../oai-databases.php', true);
 
-foreach($CONFIG as $database) {
-	if(!file_exists($MAPPING_DIR . '/' . $database['mapping'])) {
-		die("O arquivo ${database['mapping']} não existe.");
-	}
-
-	$database_xrf = $database['path'] . '/' . $database['name'] . '.xrf';
-	$database_mst = $database['path'] . '/' . $database['name'] . '.mst';
-	//$database_cnt = $database['path'] . '/' . $database['name'] . '.cnt';
-	if(!(file_exists($database_xrf) && file_exists($database_mst))) {
-		die("As bases não existem, ou estão incompletas.");
-	}
+$config_file = dirname(__FILE__) . "/../oai-config.php";
+if(!file_exists($config_file)) {
+	die("ERROR: config file does not exists!");
 }
 
-$DATABASES = array();
-foreach($CONFIG as $key => $database) {
-	$DATABASES[$key] = array();
-	$DATABASES[$key]['setname'] = $key;
-	$DATABASES[$key]['database'] = $database['path'] . '/' . $database['name'];
-	$DATABASES[$key]['mapping'] = $MAPPING_DIR . '/' . $database['mapping'];
-	$DATABASES[$key]['prefix'] = $database['prefix'];
-}
+$CONFIG = parse_ini_file($config_file, true);
 
-print '<pre>';
-print_r($DATABASES);
+define('LOG_DIR', $CONFIG['ENVIRONMENT']['DATABASE_PATH'] . $CONFIG['ENVIRONMENT']['DIRECTORY'] . '/log/');
+
+// Log name example 201111.log
+$log = new Log();
+$log->setFileName(date('Ym') . '.log');
 
 ?>
