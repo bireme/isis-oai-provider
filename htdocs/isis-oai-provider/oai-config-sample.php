@@ -11,4 +11,12 @@ DATABASE_PATH=/home/bvs/bases/
 ; Set the directory configured to execute cgi-bin applications. 
 CGI-BIN_DIRECTORY=/cgi-bin/
 
+[INFORMATION]
+
+; Set the repository's name.
+NAME=Bilbioteca Virtual de Saúde
+
+; Set the email of the system admin
+EMAIL=online@bireme.org
+
 ;*/ ?>
