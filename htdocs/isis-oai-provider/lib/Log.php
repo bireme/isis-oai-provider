@@ -113,12 +113,13 @@ class Log
      * @desc adiciona log de erro
      */
     function logError($message)
-    {
+    {   
+
         $fp = @fopen ($this->directory . "logerror.txt", "a+b");
         if ( !$fp ){
             print ("Unable to open log file for update " . LOG_DIR . "logerror.txt");
         }else{  
-            if ( !fwrite($fp, $message) ){  
+            if ( !fwrite($fp, date("Y-m-d H:i:s") . LOG_SEPARATOR . $message . "\r\n") ){  
                 print ("Unable to write in log file " . $this->directory . "logerror.txt");
             }else{
                 print ("Log error message: " . $message);
