@@ -41,13 +41,11 @@ foreach($DATABASES as $database) {
 $databases = array();
 foreach($DATABASES as $key => $database) {
 	$databases[$key] = array();
-	$databases[$key]['setname'] = $key;
+	$databases[$key]['setSpec'] = $key;
+	$databases[$key]['setName'] = $database['description'];
 	$databases[$key]['database'] = $database['path'] . '/' . $database['name'];
 	$databases[$key]['mapping'] = $mapping_dir . '/' . $database['mapping'];
 	$databases[$key]['prefix'] = $database['prefix'];
 }
-
-print '<pre>';
-print_r($databases);
 
 ?>
