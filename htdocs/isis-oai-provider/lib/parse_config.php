@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . '/Log.php');
 
 
-$config_file = dirname(__FILE__) . "/../oai-config.php";
+$config_file = APPLICATION_PATH . "/oai-config.php";
 if(!file_exists($config_file)) {
 	die("ERROR: config file does not exists!");
 }

@@ -2,8 +2,8 @@
 
 require_once(dirname(__FILE__) . "/parse_config.php");
 
-$mapping_dir = dirname(__FILE__) . '/../map';
-$databases_file = dirname(__FILE__) . '/../oai-databases.php';
+$mapping_dir = APPLICATION_PATH . '/map';
+$databases_file = APPLICATION_PATH . '/oai-databases.php';
 
 if(!is_dir($mapping_dir)) {
 	$error = "mapping directory does not exists! ($mapping_dir)";

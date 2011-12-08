@@ -1,7 +1,9 @@
 <?php
 
+define('APPLICATION_PATH', dirname(__FILE__));
+
 if(isset($_REQUEST['verb'])) {
-	require_once(dirname(__FILE__) . '/oai.php');
+	require_once(APPLICATION_PATH . '/oai.php');
 } else{
 
    $base_url =  "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'];

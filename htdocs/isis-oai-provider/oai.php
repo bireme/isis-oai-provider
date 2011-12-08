@@ -1,12 +1,11 @@
 <?php
-ini_set('display_errors', true);
 
-require_once(dirname(__FILE__) . '/lib/parse_config.php');
-require_once(dirname(__FILE__) . '/oai-metadataformats.php');
-require_once(dirname(__FILE__) . '/lib/parse_databases.php');
-require_once(dirname(__FILE__) . '/lib/OAIServer.php');
-require_once(dirname(__FILE__) . '/lib/ISISItemFactory.php');
-require_once(dirname(__FILE__) . '/lib/ISISItem.php');
+require_once(APPLICATION_PATH . '/lib/parse_config.php');
+require_once(APPLICATION_PATH . '/oai-metadataformats.php');
+require_once(APPLICATION_PATH . '/lib/parse_databases.php');
+require_once(APPLICATION_PATH . '/lib/OAIServer.php');
+require_once(APPLICATION_PATH . '/lib/ISISItemFactory.php');
+require_once(APPLICATION_PATH . '/lib/ISISItem.php');
 
 // default verb: Identify
 $verb = ($_REQUEST['verb'] == "")? "Identify" : $_REQUEST['verb'];
