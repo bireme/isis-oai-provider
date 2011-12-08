@@ -38,9 +38,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 					<div id="group_title">verbs</div>
 					<div id="group_content">
 						<div id="menu_item"><a href="javascript: setForm('Identify'); showVerb('Identify');">Identify</a></div>
-						<div id="menu_item"><a href="javascript: setForm('ListMetadataFormats'); showVerb('ListMetadataFormats');">ListMetadataFormats</a></div>
-						<div id="menu_item"><a href="javascript: setForm('ListIdentifiers'); showVerb('ListIdentifiers');">ListIdentifiers</a></div>
+						<div id="menu_item"><a href="javascript: setForm('ListMetadataFormats'); showVerb('ListMetadataFormats');">ListMetadataFormats</a></div>						
 						<div id="menu_item"><a href="javascript: setForm('ListSets'); showVerb('ListSets');">ListSets</a></div>
+						<div id="menu_item"><a href="javascript: setForm('ListIdentifiers'); showVerb('ListIdentifiers');">ListIdentifiers</a></div>						
 						<div id="menu_item"><a href="javascript: setForm('ListRecords'); showVerb('ListRecords');">ListRecords</a></div>
 						<div id="menu_item"><a href="javascript: setForm('GetRecord'); showVerb('GetRecord');">GetRecord</a></div>																								
 					</div>			

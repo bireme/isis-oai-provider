@@ -24,12 +24,17 @@ class ISISItemFactory implements OAIItemFactory {
 
     function GetItem($ItemId) 
 	{
+
+       $isis_item = new ISISItem($ItemId);
+       return $isis_item;
 		
 	}
 	   
     function GetItems($StartingDate = NULL, $EndingDate = NULL)
     {
-    	
+    	$ItemIds = array('1', '2', '3');
+
+        return $ItemIds;
     }
 
     # retrieve IDs of items that matches set spec (only needed if sets supported)

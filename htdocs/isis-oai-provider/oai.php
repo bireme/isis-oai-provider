@@ -1,9 +1,12 @@
 <?php
+ini_set('display_errors', true);
 
 require_once(dirname(__FILE__) . '/lib/parse_config.php');
+require_once(dirname(__FILE__) . '/oai-metadataformats.php');
 require_once(dirname(__FILE__) . '/lib/parse_databases.php');
 require_once(dirname(__FILE__) . '/lib/OAIServer.php');
 require_once(dirname(__FILE__) . '/lib/ISISItemFactory.php');
+require_once(dirname(__FILE__) . '/lib/ISISItem.php');
 
 // default verb: Identify
 $verb = ($_REQUEST['verb'] == "")? "Identify" : $_REQUEST['verb'];
@@ -22,8 +25,13 @@ $repository_description = array(
 );
 
 $server = new OAIServer($repository_description, &$item_factory, TRUE, 0);
-$response = $server->GetResponse();
 
+
+foreach ($METADATAFORMATS as $name => $format ){
+	$server->AddFormat($name, $format['TagName'], $format['SchemaNamespace'], $format['SchemaDefinition'],  $format['SchemaVersion'], $format['NamespaceList'], null, array() );	
+}
+
+$response = $server->GetResponse();
 // show XML
 header("Content-type: text/xml");
 print $response;
