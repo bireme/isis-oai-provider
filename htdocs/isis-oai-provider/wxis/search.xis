@@ -1,0 +1,28 @@
+<IsisScript name="search">
+
+	<section name="search">
+		<!-- CGI environment -->	
+		<field action="replace" tag="1">
+			<pft>			
+				'6001 database'/
+				'6002 expression'/
+			</pft>
+		</field>
+
+		<cgitable><pft>v1</pft></cgitable>
+        <field action="cgi" tag="prefix">tag</field>
+        
+		<display><pft>'Content-type: text/xml'/#</pft></display>
+
+		<do task="search">
+			<parm name="db"><pft>v6001</pft></parm>
+			<parm name="expression"><pft>v6002</pft></parm>
+
+			<parm name="isisxml style">3</parm>
+			<loop>
+				<display><isisxml>*</isisxml></display>				
+			</loop>
+		</do>
+	</section>
+
+</IsisScript>	

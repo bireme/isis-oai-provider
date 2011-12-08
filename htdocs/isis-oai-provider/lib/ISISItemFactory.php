@@ -32,7 +32,8 @@ class ISISItemFactory implements OAIItemFactory {
 	   
     function GetItems($StartingDate = NULL, $EndingDate = NULL)
     {
-    	$ItemIds = array('1', '2', '3');
+        //TODO: Implementar invertido isis de data e chamada isisscript com range de data
+    	$ItemIds = array('lilacs-1', 'lilacs-20', 'lilacs-33');
 
         return $ItemIds;
     }

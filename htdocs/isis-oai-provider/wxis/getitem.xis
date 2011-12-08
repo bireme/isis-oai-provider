@@ -1,0 +1,33 @@
+<IsisScript name="list">
+
+	<section name="list">
+		<!-- CGI environment -->	
+		<field action="replace" tag="1">
+			<pft>			
+				'6001 database'/
+				'6002 pft'/
+			</pft>
+		</field>
+
+		<cgitable><pft>v1</pft></cgitable>
+        <field action="cgi" tag="prefix">tag</field>
+        
+		<display><pft>'Content-type: text/plain'/#</pft></display>
+		<display><pft>'database:', v6001</pft></display>
+		<display><pft>'pft:', v6002</pft></display>
+
+		
+		<do task="mfnrange">
+			<parm name="db"><pft>v6001</pft></parm>
+			<parm name="from">1</parm>
+			<parm name="count">5</parm>
+
+			<parm name="isisxml style">3</parm>
+
+			<loop>
+				<display><isisxml>*</isisxml></display>				
+			</loop>
+		</do>
+	</section>
+
+</IsisScript>	

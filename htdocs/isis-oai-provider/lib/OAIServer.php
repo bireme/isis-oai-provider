@@ -441,7 +441,8 @@ class OAIServer {
                     # get list of items that matches incoming criteria
                     $ItemIds = $this->ItemFactory->GetItems(
                         (isset($Args["from"]) ? $Args["from"] : NULL),
-                        (isset($Args["until"]) ? $Args["until"] : NULL));
+                        (isset($Args["until"]) ? $Args["until"] : NULL));                    
+                    
                 }
 
                 # if no items found
@@ -469,6 +470,7 @@ class OAIServer {
 
                             # add record for item
                             $Response .= $this->GetRecordTags($Item, $Args["metadataPrefix"], $IncludeMetadata);
+                            
                         }
 
                         # increment count of processed items
@@ -730,84 +732,9 @@ class OAIServer {
         {
             # open metadata tag
             $Tags .= $this->FormatTag("metadata");
+            $Tags .= $Item->GetMetadata();
 
-            # set up attributes for metadata format tag
-            $MFAttribs["xsi:schemaLocation"] =
-                    $this->FormatDescrs[$MetadataFormat]["SchemaNamespace"]." \n"
-                    .$this->FormatDescrs[$MetadataFormat]["SchemaDefinition"];
-            $MFAttribs["xmlns"] = $this->FormatDescrs[$MetadataFormat]["SchemaNamespace"];
-            if (strlen($this->FormatDescrs[$MetadataFormat]["SchemaVersion"]) > 0)
-            {
-                $MFAttribs["schemaVersion"] = $this->FormatDescrs[$MetadataFormat]["SchemaVersion"];
-            }
-            $MFAttribs["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach ($this->FormatDescrs[$MetadataFormat]["NamespaceList"] as $NamespaceName => $NamespaceURI)
-            {
-                $MFAttribs["xmlns:".$NamespaceName] = $NamespaceURI;
-            }
-
-            # open metadata format tag
-            $Tags .= $this->FormatTag($this->FormatDescrs[$MetadataFormat]["TagName"], NULL, $MFAttribs);
-
-            # for each field mapping for this metadata format
-            foreach ($this->FieldMappings[$MetadataFormat] as $LocalFieldName => $OAIFieldName)
-            {
-                # if field looks like it has been mapped
-                if (strlen($OAIFieldName) > 0)
-                {
-                    # retrieve content for field
-                    $Content = $Item->GetValue($LocalFieldName);
-
-                    # retrieve qualifiers for content
-                    $Qualifier = $Item->GetQualifier($LocalFieldName);
-
-                    # if content is array
-                    if (is_array($Content))
-                    {
-                        # for each element of array
-                        foreach ($Content as $ContentIndex => $ContentValue)
-                        {
-                            # if element has content
-                            if (strlen($ContentValue) > 0)
-                            {
-                                # generate tag for element
-                                $ContentAttribs = NULL;
-                                if (isset($Qualifier[$ContentIndex]) && strlen($Qualifier[$ContentIndex]))
-                                {
-                                    if (isset($this->QualifierMappings[$MetadataFormat][$Qualifier[$ContentIndex]])
-                                            && (strlen($this->QualifierMappings[$MetadataFormat][$Qualifier[$ContentIndex]]) > 0))
-                                    {
-                                        $ContentAttribs["xsi:type"] = $this->QualifierMappings[$MetadataFormat][$Qualifier[$ContentIndex]];
-                                    }
-                                }
-                                $Tags .= $this->FormatTag($OAIFieldName,
-                                                          utf8_encode(htmlspecialchars(preg_replace("/[\\x00-\\x1F]+/", "", $ContentValue))),
-                                                          $ContentAttribs);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        # if field has content
-                        if (strlen($Content) > 0)
-                        {
-                            # generate tag for field
-                            $ContentAttribs = NULL;
-                            if (strlen($Qualifier) > 0)
-                            {
-                                if (isset($this->QualifierMappings[$MetadataFormat][$Qualifier])
-                                        && (strlen($this->QualifierMappings[$MetadataFormat][$Qualifier]) > 0))
-                                {
-                                    $ContentAttribs["xsi:type"] = $this->QualifierMappings[$MetadataFormat][$Qualifier];
-                                }
-                            }
-                            $Tags .= $this->FormatTag($OAIFieldName,
-                                                      utf8_encode(htmlspecialchars(preg_replace("/[\\x00-\\x1F]+/", "", $Content))),
-                                                      $ContentAttribs);
-                        }
-                    }
-                }
-            }
+            // DELETED HANDLE OF OAI FIELDS
 
             # close metadata format tag
             $Tags .= $this->FormatTag();

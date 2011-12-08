@@ -9,34 +9,26 @@ class ISISItem implements OAIItem {
     {
         # save ID for later use
         $this->Id = $ItemId;
+        $id_parts = explode('-', $ItemId);
+        $this->DBName = $id_parts[0];
 
-        # save any search info supplied
-        $this->SearchInfo = $SearchInfo;
+        $this->Resource = new ISISDb($this->DBName);
+        
 
-        # attempt to create resource object
-        $this->Resource = new Resource($ItemId);
-
-        # if resource object creation failed
-        if ($this->Resource->Status() == -1)
-        {
-            # set status to -1 to indicate constructor failure
-            $this->LastStatus = -1;
-        }
-        else
-        {
-            # set status to 1 to indicate constructor success
-            $this->LastStatus = 1;
-        }
     }
 
     function GetId() {  return $this->Id;  }
 
     function GetDatestamp()
     {
-        $DateString = $this->Resource->Get("Date Of Record Creation");
+        $DateString = "0000-00-00 00:00:00";
         if ($DateString == "0000-00-00 00:00:00") {  $DateString = date("Y-m-d");  }
-        $Date = new Date($DateString);
-        return $Date->FormattedISO8601();
+        return $DateString;
+    }
+
+    function GetMetadata(){
+
+        return $this->Resource->search(array('expression' => $this->Id));
     }
 
     function GetValue($ElementName)
@@ -89,38 +81,8 @@ class ISISItem implements OAIItem {
     function GetSets()
     {
         # start out with empty list
-        $Sets = array();
+        $Sets = array($this->DBName);
 
-        # for each possible metadata field
-        $Schema = new MetadataSchema();
-        $Fields = $Schema->GetFields(MetadataSchema::MDFTYPE_TREE|MetadataSchema::MDFTYPE_CONTROLLEDNAME|MetadataSchema::MDFTYPE_OPTION);
-        foreach ($Fields as $Field)
-        {
-            # if field is flagged for use for OAI sets
-            if ($Field->UseForOaiSets())
-            {
-                # retrieve values for resource for this field and add to set list
-                $FieldName = $Field->Name();
-                $Values = $this->Resource->Get($FieldName);
-                if (isset($Values) && ($Values != NULL))
-                {
-                    $NormalizedFieldName = $this->NormalizeForSetSpec($FieldName);
-                    if (is_array($Values) && count($Values))
-                    {
-                        foreach ($Values as $Value)
-                        {
-                            $Sets[] = $NormalizedFieldName.":"
-                                    .$this->NormalizeForSetSpec($Value);
-                        }
-                    }
-                    else
-                    {
-                        $Sets[] = $NormalizedFieldName.":"
-                                .$this->NormalizeForSetSpec($Values);
-                    }
-                }
-            }
-        }
 
         # return list of sets to caller
         return $Sets;
@@ -140,6 +102,7 @@ class ISISItem implements OAIItem {
     # ---- PRIVATE INTERFACE -------------------------------------------------
 
     var $Id;
+    var $DBName;
     var $Resource;
     var $LastStatus;
     var $SearchInfo;

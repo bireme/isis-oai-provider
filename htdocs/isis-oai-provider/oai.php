@@ -6,6 +6,7 @@ require_once(APPLICATION_PATH . '/lib/parse_databases.php');
 require_once(APPLICATION_PATH . '/lib/OAIServer.php');
 require_once(APPLICATION_PATH . '/lib/ISISItemFactory.php');
 require_once(APPLICATION_PATH . '/lib/ISISItem.php');
+require_once(APPLICATION_PATH . '/lib/ISISDb.php');
 
 // default verb: Identify
 $verb = ($_REQUEST['verb'] == "")? "Identify" : $_REQUEST['verb'];
