@@ -19,4 +19,8 @@ NAME=Bilbioteca Virtual de Saúde
 ; Set the email of the system admin
 EMAIL=online@bireme.org
 
+IDPREFIX=org
+
+IDDOMAIN=bvs
+
 ;*/ ?>

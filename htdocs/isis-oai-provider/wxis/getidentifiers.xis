@@ -1,0 +1,68 @@
+<IsisScript name="search">
+
+	<function name="LoadBaseDef">
+	    <field action="import" tag="list">5000</field>
+	    <field action="replace" tag="1" split="occ"><pft>cat(v5000,'/oai-databases.php')</pft></field>
+
+	    <field action="replace" tag="5003" split="occ"><pft>,( if v1.5 = 'path=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
+	    <field action="replace" tag="5004" split="occ"><pft>,( if v1.5 = 'name=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
+	    <field action="replace" tag="5005" split="occ"><pft>,( if v1.7 = 'prefix=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
+	    <field action="replace" tag="5006" split="occ"><pft>,( if v1.17 = 'identifier_field=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
+
+		<field action="export" tag="list">5003/5006</field>
+	</function>
+	    
+	<section name="search">
+		<!-- CGI environment -->	
+		<field action="replace" tag="1">
+			<pft>			
+				'5000 application_path'/
+				'6001 set'/
+				'6002 metadataPrefix'/
+				'6003 from'/
+				'6004 until'/
+				'6010 resumptionToken'/
+			</pft>
+		</field>
+
+		<cgitable><pft>v1</pft></cgitable>
+        <field action="cgi" tag="prefix">tag</field>
+
+		<display><pft>'Content-type: text/plain'/#</pft></display>
+
+        <call name="LoadBaseDef">NOW</call>
+		<!--display><pft>(v5003'<br/>')(v5004'<br/>')(v5005'<br/>')(v5006'<br/>')</pft></display-->
+
+		<list action="load" type="list"><pft>(if v5003 <> '' then v5003/ fi)</pft></list>
+
+		<do task="list">			
+			<field action="define" tag="1001">Isis_Current</field>
+			<field action="define" tag="1002">Isis_Itens</field>
+			<field action="define" tag="1003">Isis_Item</field>
+
+			<loop>
+				<!-- import database settings -->
+				<field action="import" tag="list">5003/5006</field>
+
+				<!-- reduce database settings variables to current item occ -->				
+				<field action="replace" tag="5003"><pft>(if f(iocc,1,0) = v1001[1]  then v5003 fi)</pft></field>
+				<field action="replace" tag="5004"><pft>(if f(iocc,1,0) = v1001[1]  then v5004 fi)</pft></field>
+				<field action="replace" tag="5005"><pft>(if f(iocc,1,0) = v1001[1]  then v5005 fi)</pft></field>
+				<field action="replace" tag="5006"><pft>(if f(iocc,1,0) = v1001[1]  then v5006 fi)</pft></field>
+							
+				<do task="search">
+					<parm name="db"><pft>v5003,'/',v5004</pft></parm>
+					<parm name="count"><pft>'10'</pft></parm>
+					<parm name="expression"><pft>v5005,v6003,'$'</pft></parm>
+
+					<loop>
+						<field action="import" tag="list">5004/5006</field>
+	
+						<display><pft type="reload"><pft>`v5004'-'`,`v`v5006,`'|'`</pft></pft></display>			
+					</loop>
+				</do>
+			</loop>
+		</do>
+	</section>
+
+</IsisScript>

@@ -162,7 +162,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 								<tr>
 									<td>set</td>
 									<td><input type="text" name="set" size="9" maxlength="9"/></td>
-									<td>ISSN</td>
+									<td>database name</td>
 								</tr>	
 								<tr>
 									<td>identifier</td>

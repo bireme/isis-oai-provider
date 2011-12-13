@@ -17,7 +17,9 @@ class ISISItem implements OAIItem {
 
     }
 
-    function GetId() {  return $this->Id;  }
+    function GetId() {  
+        return $this->Id;  
+    }
 
     function GetDatestamp()
     {

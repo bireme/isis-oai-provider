@@ -19,8 +19,8 @@ $repository_description = array(
     "AdminEmail" => array($CONFIG['INFORMATION']['EMAIL']), // email admin
     "EarliestDate" => "1990-01-01", // verificar na base (??)
     "DateGranularity" => "DATE", // ??
-    "IDPrefix" => "", // ??
-    "IDDomain" => "", // ??
+    "IDPrefix" =>  $CONFIG['INFORMATION']['IDPREFIX'], // ??
+    "IDDomain" => $CONFIG['INFORMATION']['IDDOMAIN'], // ??
     "BaseURL" => "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'],
 );
 
@@ -33,7 +33,7 @@ foreach ($METADATAFORMATS as $name => $format ){
 
 $response = $server->GetResponse();
 // show XML
-header("Content-type: text/xml");
+header("Content-type: text/xml;");
 print $response;
 
 ?>

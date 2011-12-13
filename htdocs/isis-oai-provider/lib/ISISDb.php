@@ -24,6 +24,11 @@ class ISISDb{
   function search($param){
     return $this->wxis_document_get( $this->wxis_url("search.xis"), $param );
   }
+
+  function getidentifiers($param){
+    return $this->wxis_document_get( $this->wxis_url("getidentifiers.xis",$param) );
+  }
+
   
   function index($param){
     return wxis_index($param);
@@ -37,7 +42,9 @@ class ISISDb{
 
   function wxis_url ( $IsisScript, $param ) {
     $request = "http://" . $this->wxis_host . $this->wxis_action . "?" . "IsisScript=" . $IsisScript;
-    $request.= "&database=" . $this->dbpath . "/" . $this->dbname;
+    if ($this->dbname != ''){
+      $request.= "&database=" . $this->dbpath . "/" . $this->dbname;
+    }  
 
     foreach ($param as $key => $value){
         $request .= "&" . $key . "=" . $value;

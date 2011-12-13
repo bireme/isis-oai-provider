@@ -30,11 +30,12 @@ class ISISItemFactory implements OAIItemFactory {
 		
 	}
 	   
-    function GetItems($StartingDate = NULL, $EndingDate = NULL)
-    {
-        //TODO: Implementar invertido isis de data e chamada isisscript com range de data
-    	$ItemIds = array('lilacs-1', 'lilacs-20', 'lilacs-33');
+    function GetItems($StartingDate = NULL, $EndingDate = NULL){
 
+        $db = new ISISDb($this->DBName);
+        $ItemIds = $db->getidentifiers(array('application_path' => APPLICATION_PATH));
+             
+        $ItemIds = explode("|", $ItemIds);
         return $ItemIds;
     }
 
