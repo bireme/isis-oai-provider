@@ -1,5 +1,11 @@
 <?php
 
+if(isset($_REQUEST['debug'])) {
+	ini_set('display_errors', 1);
+} else {
+	ini_set('display_errors', 0);
+}
+
 define('APPLICATION_PATH', dirname(__FILE__));
 
 if(isset($_REQUEST['verb'])) {
