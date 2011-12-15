@@ -60,7 +60,6 @@ function range_date($startdate, $enddate) {
 						$is_complete = false;
 					}
 				}
-				//print " -" . $month . '-' . $is_complete;
 			}
 			
 
@@ -103,30 +102,41 @@ function range_date($startdate, $enddate) {
 				if(checkdate($month, 31, $year)) {
 					$is_complete = false;
 				}
-			}				
-			
+			}		
+				
 			if($is_complete) {
-
 				// printa todos os meses completos (Ex: 201105$)
 				$response[] = $year . $month . "$";
 
 			} else {
-				
+
+
 				// separa os dias pela sua dezena (0, 1, 2, 3)
 				foreach($days as $day) {
 					$days_count[$year . $month][substr($day, 0, 1)][] = $day;
 				}
 
 				foreach($days_count as $ym => $days) {
+					
+					// só trata o array desta data
+					if($ym != $year . $month) {
+						continue;
+					}
 
 					foreach($days as $init => $group_day) {
-						
+
 						// se o grupo desta dezena tiver 10, siginifica que é uma dezena completa
 						if(count($group_day) == 10) {
 
 							// (Ex: 2011051$)
 							$response[] = $year . $month . $init . "$";
 						
+						} elseif(count($group_day) == 9 && $init == 0) {						
+							$response[] = $year . $month . $init . "$";
+							
+						} elseif(in_array(30, $group_day) && in_array(31, $group_day)) {
+							$response[] = $year . $month . $init . "$";
+							
 						// se não tiver 10, significa que está incompleto
 						} else {
 
@@ -139,16 +149,23 @@ function range_date($startdate, $enddate) {
 					}
 				}
 			}
-
 			$is_complete = true;
 		}
 	}
 
+	$response[] = str_replace("/", "", date("Ymd",$enddate));
+
 	return $response;
 }
 
-$startdate = "2012-01-01";
-$enddate = "2013-10-01";
+/*function test($startdate, $enddate, $expected_result) {
+	
+	$result = range_date($startdate, $enddate);
+	return array_diff($result, $expected_result);
+}*/
+
+$startdate = "2012-01-02";
+$enddate = "2013-01-30";
 
 $range = (range_date($startdate, $enddate));
 
