@@ -33,7 +33,17 @@ class ISISItemFactory implements OAIItemFactory {
     function GetItems($StartingDate = NULL, $EndingDate = NULL){
 
         $db = new ISISDb($this->DBName);
-        $ItemIds = $db->getidentifiers(array('application_path' => APPLICATION_PATH));
+
+        if ($StartingDate !== NULL){
+            if ($EndingDate == NULL){
+                $EndingDate = date("Y-m-d");
+            }
+            $date_range_exp = implode(' OR ', range_date($StartingDate, $EndingDate));
+        }else{
+            $date_range_exp = '';
+        }
+
+        $ItemIds = $db->getidentifiers(array('application_path' => APPLICATION_PATH, 'expression' => $date_range_exp));
              
         $ItemIds = explode("|", $ItemIds);
         return $ItemIds;

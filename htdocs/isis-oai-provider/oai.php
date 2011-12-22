@@ -3,6 +3,7 @@
 require_once(APPLICATION_PATH . '/lib/parse_config.php');
 require_once(APPLICATION_PATH . '/oai-metadataformats.php');
 require_once(APPLICATION_PATH . '/lib/parse_databases.php');
+require_once(APPLICATION_PATH . '/lib/functions.php');
 require_once(APPLICATION_PATH . '/lib/OAIServer.php');
 require_once(APPLICATION_PATH . '/lib/ISISItemFactory.php');
 require_once(APPLICATION_PATH . '/lib/ISISItem.php');
