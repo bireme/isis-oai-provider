@@ -52,7 +52,21 @@ class ISISItemFactory implements OAIItemFactory {
     # retrieve IDs of items that matches set spec (only needed if sets supported)
     function GetItemsInSet($SetSpec, $StartingDate = NULL, $EndingDate = NULL)
     {
-    	
+    	$db = new ISISDb($this->DBName);
+
+        if ($StartingDate !== NULL){
+            if ($EndingDate == NULL){
+                $EndingDate = date("Y-m-d");
+            }
+            $date_range_exp = implode(' OR ', range_date($StartingDate, $EndingDate));
+        }else{
+            $date_range_exp = '';
+        }
+
+        $ItemIds = $db->getidentifiers(array('application_path' => APPLICATION_PATH, 'expression' => $date_range_exp, 'set' => $SetSpec));
+             
+        $ItemIds = explode("|", $ItemIds);
+        return $ItemIds;
     }
 
     # return array containing all set specs (with human-readable set names as keys)

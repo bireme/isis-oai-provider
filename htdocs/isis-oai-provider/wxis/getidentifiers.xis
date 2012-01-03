@@ -28,6 +28,7 @@
         <field action="cgi" tag="prefix">tag</field>
 
 		<display><pft>'Content-type: text/plain'/#</pft></display>
+		<!--trace>On</trace-->
 
         <call name="LoadBaseDef">NOW</call>
 
@@ -39,15 +40,18 @@
 			<field action="define" tag="1003">Isis_Item</field>
 
 			<loop>
-				<!-- import database settings -->
-				<field action="import" tag="list">5003/5006, 6003</field>
 
+				<!-- import database settings -->
+				<field action="import" tag="list">5003/5004/5006, 6001/6003</field>
 				<!-- reduce database settings variables to current item occ -->				
 				<field action="replace" tag="5003"><pft>(if f(iocc,1,0) = v1001[1]  then v5003 fi)</pft></field>
 				<field action="replace" tag="5004"><pft>(if f(iocc,1,0) = v1001[1]  then v5004 fi)</pft></field>
 				<field action="replace" tag="5005"><pft>(if f(iocc,1,0) = v1001[1]  then v5005 fi)</pft></field>
 				<field action="replace" tag="5006"><pft>(if f(iocc,1,0) = v1001[1]  then v5006 fi)</pft></field>
-							
+				
+				<!-- if parameter 'set' is setted, then will be displayed only the current set -->
+				<flow action=jump><pft>if v6001 <> '' and v5004 <> v6001 then 'GO' fi</pft></flow>
+
 				<do task="search">
 					<parm name="db"><pft>v5003,'/',v5004</pft></parm>
 					<parm name="expression"><pft>if p(v6003) then v5005,replace(v6003,' OR ', s(' OR ',v5005)) else '$' fi</pft></parm>
@@ -59,6 +63,8 @@
 						<display><pft type="reload"><pft>`v5004'-'`,`v`v5006,`'|'`</pft></pft></display>			
 					</loop>
 				</do>
+
+				<label>GO</label> 
 			</loop>
 		</do>
 	</section>
