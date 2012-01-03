@@ -25,7 +25,7 @@ class ISISItem implements OAIItem {
     {
         $DateString = "0000-00-00 00:00:00";
         if ($DateString == "0000-00-00 00:00:00") {  $DateString = date("Y-m-d");  }
-        return $DateString;
+        return $DateString;        
     }
 
     function GetMetadata(){

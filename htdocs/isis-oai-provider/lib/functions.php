@@ -156,11 +156,12 @@ function range_date($startdate, $enddate) {
 	return $response;
 }
 
-/*function test($startdate, $enddate, $expected_result) {
+/*<<<<<<< HEAD
+function test($startdate, $enddate, $expected_result) {
 	
 	$result = range_date($startdate, $enddate);
 	return array_diff($result, $expected_result);
-}*/
+}
 
 $startdate = "2012-01-01";
 $enddate = "2013-12-30";
@@ -172,4 +173,7 @@ print "END: $enddate\r\n";
 
 print_r($range);
 
+=======
+>>>>>>> 779d82720c425d55b0d31aca5a96078c0975e4ef
+*/
 ?>

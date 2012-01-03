@@ -26,7 +26,7 @@ class ISISDb{
   }
 
   function getidentifiers($param){
-    return $this->wxis_document_get( $this->wxis_url("getidentifiers.xis",$param) );
+    return $this->wxis_document_post( $this->wxis_url("getidentifiers.xis",$param) );
   }
 
   
@@ -53,6 +53,50 @@ class ISISDb{
     return $request;
   
  }
+
+  function wxis_document_post( $url, $content = "" ){ 
+    $content = str_replace("\\\"","\"",$content);
+    $content = str_replace("\n","",$content);
+    $content = str_replace("\r","",$content);
+    $content = str_replace("\\\\","\\",$content);
+
+    // Strip URL  
+    $url_parts = parse_url($url);
+    $host = $url_parts["host"];
+    $port = ($url_parts["port"]) ? $url_parts["port"] : 80;
+    $path = $url_parts["path"];
+    $query = $url_parts["query"];
+    if ( $content != "" )
+    {
+      $query .= "&content=" . urlencode($content);
+    }
+    $timeout = 10;
+    $contentLength = strlen($query);
+    
+    // Generate the request header 
+      $ReqHeader =  
+        "POST $path HTTP/1.0\n". 
+        "Host: $host\n". 
+        "User-Agent: PostIt\n". 
+        "Content-Type: application/x-www-form-urlencoded\n". 
+        "Content-Length: $contentLength\n\n". 
+        "$query\n"; 
+    
+    // Open the connection to the host 
+    $fp = fsockopen($host, $port, $errno, $errstr, $timeout);
+    
+    fputs( $fp, $ReqHeader ); 
+    if ($fp) {
+      while (!feof($fp)){
+        $result .= fgets($fp, 4096);
+      }
+    }
+    
+    $response = strstr($result,"\n\r");
+    $response = trim($response);
+
+    return $response; 
+  }
 
 }
 
