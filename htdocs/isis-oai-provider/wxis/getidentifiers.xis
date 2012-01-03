@@ -55,7 +55,7 @@
 				<do task="search">
 					<parm name="db"><pft>v5003,'/',v5004</pft></parm>
 					<parm name="expression"><pft>if p(v6003) then v5005,replace(v6003,' OR ', s(' OR ',v5005)) else '$' fi</pft></parm>
-					<parm name="count">20</parm>
+					<!--parm name="count">20</parm-->
 
 					<loop>
 						<field action="import" tag="list">5004/5006</field>
