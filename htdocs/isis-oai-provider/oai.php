@@ -42,7 +42,10 @@ print $response;
 $enddate = time();
 $time = $enddate - $startdate;
 
-print "<!-- Execution Time: $time sec -->";
+if(isset($_REQUEST['debug'])) {
+	
+	print "<!-- Execution Time: $time sec -->";
+}
 
 
 ?>
