@@ -1,5 +1,7 @@
 <?php
 
+$startdate = time();
+
 require_once(APPLICATION_PATH . '/lib/parse_config.php');
 require_once(APPLICATION_PATH . '/oai-metadataformats.php');
 require_once(APPLICATION_PATH . '/lib/parse_databases.php');
@@ -36,5 +38,14 @@ $response = $server->GetResponse();
 // show XML
 header("Content-type: text/xml;");
 print $response;
+
+$enddate = time();
+$time = $enddate - $startdate;
+
+if(isset($_REQUEST['debug'])) {
+	
+	print "<!-- Execution Time: $time sec -->";
+}
+
 
 ?>

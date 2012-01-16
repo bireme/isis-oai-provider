@@ -14,13 +14,12 @@ function range_date($startdate, $enddate) {
 	$current = $startdate;
 
 	// criação do array de datas
-	while( true ) {
-
+	while(true) {
 
 		$dates[date("Y", $current)][date("m", $current)][] = date("d", $current);
 		$current = strtotime( "+1 day", $current );
 
-		if($current > $enddate) break;
+		if(date("Ymd",$current) > date("Ymd",$enddate)) break;
 	}
 
 	$response = array();
@@ -30,11 +29,11 @@ function range_date($startdate, $enddate) {
 		
 		// caso seja um ano completo, ele imprime "ano$". Ex: 2011$
 		if(count($dates[$year]) == 12) {	
+
 					
 			foreach($months as $month => $days) {
 				
-				if(count($days) < 31 && count($days) < 30) {					
-					
+				if(count($days) < 31 && count($days) < 30) {						
 
 					// meses com menos de 28 são sempre incompletos
 					if(count($days) < 28) {
@@ -61,7 +60,6 @@ function range_date($startdate, $enddate) {
 					}
 				}
 			}
-			
 
 			if($is_complete) {
 				$response[] = $year . "$";
@@ -131,13 +129,15 @@ function range_date($startdate, $enddate) {
 							// (Ex: 2011051$)
 							$response[] = $year . $month . $init . "$";
 						
+						// se a dezena for 0, o grupo completo terá somente nove itens
 						} elseif(count($group_day) == 9 && $init == 0) {						
 							$response[] = $year . $month . $init . "$";
 							
+						// se houver o dia 30 e 31, significa que a dezena 3 está completa
 						} elseif(in_array(30, $group_day) && in_array(31, $group_day)) {
 							$response[] = $year . $month . $init . "$";
 							
-						// se não tiver 10, significa que está incompleto
+						// caindo aqui, ele estará obrigatoriamente incompleto
 						} else {
 
 							// itera nos dias e printa o dia completo (Ex: 20110501)
@@ -153,9 +153,27 @@ function range_date($startdate, $enddate) {
 		}
 	}
 
-	$response[] = str_replace("/", "", date("Ymd",$enddate));
-
 	return $response;
 }
 
+/*<<<<<<< HEAD
+function test($startdate, $enddate, $expected_result) {
+	
+	$result = range_date($startdate, $enddate);
+	return array_diff($result, $expected_result);
+}
+
+$startdate = "2012-01-01";
+$enddate = "2013-12-30";
+
+$range = (range_date($startdate, $enddate));
+
+print "START: $startdate\r\n";
+print "END: $enddate\r\n";
+
+print_r($range);
+
+=======
+>>>>>>> 779d82720c425d55b0d31aca5a96078c0975e4ef
+*/
 ?>
