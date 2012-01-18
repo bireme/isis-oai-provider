@@ -19,10 +19,9 @@
 				'5000 application_path'/
 				'6001 database'/
 				'6002 metadataPrefix'/
-				'6011 id'/
+				'6011 identifier'/
 			</pft>
 		</field>		
-
 
 		<cgitable><pft>v1</pft></cgitable>
         <field action="cgi" tag="prefix">tag</field>
@@ -38,12 +37,17 @@
 			<field action="define" tag="1001">Isis_Current</field>
 			<field action="define" tag="1002">Isis_Itens</field>
 			<field action="define" tag="1003">Isis_Item</field>
-
 			<!-- split field in the '-'. First field is set and second field is id -->
-			<field action="replace" tag="6011" split="occ"><pft>proc('Gsplit/clean=6011=-')</pft></field>
 
-			<field action="replace" tag="6012" split="occ"><pft>v6011[1]</pft></field>
-			<field action="replace" tag="6011" split="occ"><pft>v6011[2]</pft></field>
+			<!-- split field in the ':'. Third field is set+id -->
+			<field action="replace" tag="6011" split="occ"><pft>proc('Gsplit/clean=6011=:')</pft></field>
+			<field action="replace" tag="6014" split="occ"><pft>v6011[3]</pft></field>
+
+			<!-- split field in the '-'. Second field is set and third field is id -->
+
+			<field action="replace" tag="6014" split="occ"><pft>proc('Gsplit/clean=6014=-')</pft></field>
+			<field action="replace" tag="6012" split="occ"><pft>v6014[2]</pft></field>
+			<field action="replace" tag="6011" split="occ"><pft>v6014[3]</pft></field>
 
 			<loop>
 
@@ -68,7 +72,9 @@
 
 					<loop>
 						<field action="import" tag="list">5004/5006</field>
-						<display><isisxml>*</isisxml></display>	
+						<!--display><isisxml>*</isisxml></display-->	
+
+						<display><pft type="reload"><pft>`v5004'-'`,`v`v5006,`'|'`</pft></pft></display>
 					</loop>
 				</do>
 
