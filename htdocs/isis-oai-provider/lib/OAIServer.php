@@ -247,13 +247,15 @@ class OAIServer {
         # if arguments were bad
         if (isset($this->Args["identifier"]))
         {
-            $ItemId = $this->DecodeIdentifier($this->Args["identifier"]);
+
+           $ItemId = $this->DecodeIdentifier($this->Args["identifier"]);
         }
         else
         {
             $ItemId = NULL;
         }
-        if (isset($this->Args["metadataPrefix"]))
+ 	   
+       if (isset($this->Args["metadataPrefix"]))
         {
             $MetadataFormat = $this->Args["metadataPrefix"];
         }
@@ -267,7 +269,7 @@ class OAIServer {
             $Response .= $this->GetRequestTag("GetRecord");
 
             # add error tag
-            $Response .= $this->GetErrorTag("badArgument", "Bad argument found.");
+            $Response .= $this->GetErrorTag("badArgument", $ItemId."Bad argument found.");
         }
         else
         {
@@ -383,6 +385,16 @@ class OAIServer {
 
             # add error tag indicating bad argument
             $Response .= $this->GetErrorTag("badArgument", "Bad date format.");
+        }
+        # else if until date is earlier than from date
+        elseif ((isset($Args["from"]) && (isset($Args["until"]) )
+                 && $Args["until"]<$Args["from"]))
+        {
+            # add request info tag with no attributes
+            $Response .= $this->GetRequestTag($Request);
+
+            # add error tag indicating invalid until date
+            $Response .= $this->GetErrorTag("badArgument", "Invalid until date.");
         }
         else
         {
