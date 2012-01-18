@@ -249,6 +249,9 @@ class OAIServer {
         {
 
            $ItemId = $this->DecodeIdentifier($this->Args["identifier"]);
+	   #Create to show database-id
+	   $ItemDatabaseId= $this->DecodeDatabaseIdentifier($this->Args["identifier"]);
+
         }
         else
         {
@@ -278,7 +281,7 @@ class OAIServer {
             $Response .= $this->GetRequestTag("GetRecord", $ReqArgList);
 
             # attempt to load item corresponding to record
-            $Item = $this->ItemFactory->GetItem($ItemId);
+            $Item = $this->ItemFactory->GetItem($ItemDatabaseId);
 
             # if no item found
             if ($Item == NULL)
@@ -295,7 +298,7 @@ class OAIServer {
                 $Response .= $this->GetRecordTags($Item, $MetadataFormat);
 
                 # close response type tag
-                $Response .= $this->FormatTag();
+                //$Response .= $this->FormatTag();
             }
         }
 
@@ -515,7 +518,7 @@ class OAIServer {
                     }
 
                     # close response type tag
-                    $Response .= $this->FormatTag();
+                  $Response .= $this->FormatTag();
                 }
             }
         }
@@ -646,7 +649,7 @@ class OAIServer {
     private function GetResponseBeginTags()
     {
         # start with XML declaration
-        $Tags = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
+        $Tags = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\n";
 
         # add OAI-PMH root element begin tag
         $Tags .= "<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\"\n"
@@ -817,12 +820,38 @@ class OAIServer {
             if ($Pieces[0] == $this->RepDescr["IDPrefix"])
             {
                 # decoded value is final piece
-                $Id = $Pieces[1];
+                $Id = $Pieces[2];
             }
         }
 
         # return decoded value to caller
         return $Id;
+    }
+
+    private function DecodeDatabaseIdentifier($Identifier)
+    {
+        # assume that decode will fail
+        $Id = NULL;
+
+        # split ID into component pieces
+        $Pieces = explode(":", $Identifier);
+
+        # if pieces look okay
+        if (($Pieces[0] == "oai") && ($Pieces[1] == $this->RepDescr["IDDomain"]))
+        {
+            # split final piece
+            $Pieces = explode("-", $Pieces[2]);
+
+            # if identifier prefix looks okay
+            if ($Pieces[0] == $this->RepDescr["IDPrefix"])
+            {
+                # decoded value is final piece
+                $IdDB = $Pieces[1]."-".$Pieces[2];
+            }
+        }
+
+        # return decoded value to caller
+        return $IdDB;
     }
 
     private function EncodeResumptionToken($StartingDate, $EndingDate, $MetadataFormat, $SetSpec, $ListStartPoint)

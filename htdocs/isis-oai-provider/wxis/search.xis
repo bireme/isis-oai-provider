@@ -8,15 +8,16 @@
 				'6002 expression'/
 			</pft>
 		</field>
-
 		<cgitable><pft>v1</pft></cgitable>
         <field action="cgi" tag="prefix">tag</field>
-        
-		<display><pft>'Content-type: text/xml'/#</pft></display>
 
+		<display><pft>'Content-type: text/xml'/#</pft></display>
 		<do task="search">
 			<parm name="db"><pft>v6001</pft></parm>
-			<parm name="expression"><pft>v6002</pft></parm>
+
+			<field action="replace" tag="6002" split="occ"><pft>proc('Gsplit/clean=6002=-')</pft></field>
+
+			<parm name="expression"><pft>v6002[2]</pft></parm>
 
 			<parm name="isisxml style">3</parm>
 			<loop>

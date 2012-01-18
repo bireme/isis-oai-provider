@@ -22,7 +22,7 @@ class ISISDb{
   }
   
   function search($param){
-    return $this->wxis_document_get( $this->wxis_url("search.xis"), $param );
+    return $this->wxis_document_get( $this->wxis_url("search.xis", $param ) );
   }
 
   function getidentifiers($param){
