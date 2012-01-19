@@ -35,7 +35,7 @@ class ISISDb{
   }
   
   function wxis_document_get($url){
-    return "oi?".file_get_contents($url);
+    return file_get_contents($url);
 
   }
 
