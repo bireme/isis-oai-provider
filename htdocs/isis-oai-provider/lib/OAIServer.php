@@ -649,7 +649,7 @@ class OAIServer {
     private function GetResponseBeginTags()
     {
         # start with XML declaration
-        $Tags = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\n";
+        $Tags = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 
         # add OAI-PMH root element begin tag
         $Tags .= "<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\"\n"
