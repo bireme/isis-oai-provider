@@ -298,7 +298,7 @@ class OAIServer {
                 $Response .= $this->GetRecordTags($Item, $MetadataFormat);
 
                 # close response type tag
-                //$Response .= $this->FormatTag();
+                $Response .= $this->FormatTag();
             }
         }
 
@@ -970,7 +970,7 @@ class OAIServer {
             $Tag = str_repeat(" ", ($IndentLevel * $this->IndentSize));
 
             # add end tag to match last open tag
-            $Tag .= "</".$LastName.">\n";
+	    if ($LastName !== NULL){	$Tag .= "</".$LastName.">\n";	}
         }
 
         # return formatted tag to caller
