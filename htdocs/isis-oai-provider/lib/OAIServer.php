@@ -272,7 +272,7 @@ class OAIServer {
             $Response .= $this->GetRequestTag("GetRecord");
 
             # add error tag
-            $Response .= $this->GetErrorTag("badArgument", $ItemId."Bad argument found.");
+            $Response .= $this->GetErrorTag("badArgument", "Bad argument found.");
         }
         else
         {
