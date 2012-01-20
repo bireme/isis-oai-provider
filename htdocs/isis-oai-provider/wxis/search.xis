@@ -19,7 +19,7 @@
 
 			<parm name="expression"><pft>v6002[2]</pft></parm>
 
-			<parm name="isisxml style">3</parm>
+			<parm name="isisxml style">1</parm>
 			<loop>
 				<display><isisxml>*</isisxml></display>				
 			</loop>

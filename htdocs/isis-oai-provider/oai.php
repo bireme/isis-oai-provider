@@ -34,7 +34,7 @@ foreach ($METADATAFORMATS as $name => $format ){
 	$server->AddFormat($name, $format['TagName'], $format['SchemaNamespace'], $format['SchemaDefinition'],  $format['SchemaVersion'], $format['NamespaceList'], null, array() );	
 }
 
-$response = $server->GetResponse();
+$response = rep_cdata($server->GetResponse());
 // show XML
 header("Content-type: text/xml;");
 print $response;
@@ -47,5 +47,13 @@ if(isset($_REQUEST['debug'])) {
 	print "<!-- Execution Time: $time sec -->";
 }
 
+//Put CDATA to translate spacial characters, this works with isisxml style=1
+function rep_cdata($term){
+
+	$term = preg_replace("/<v([0-9]+)>/","<v$1><![CDATA[",$term);
+	$term = preg_replace("/<\/v([0-9]+)/","]]></v$1",$term);
+
+	return $term;
+}
 
 ?>
