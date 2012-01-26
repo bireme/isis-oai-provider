@@ -51,6 +51,7 @@ function submitForm()
 		alert("Is necessary to fill the URL field");
 		formStatus = false;
 	}
+
 	if (verb == "Identify")
 	{
 		URL = URL+"?verb="+verb;
@@ -62,17 +63,21 @@ function submitForm()
 	else if (verb == "ListIdentifiers")
 	{
 		URL = URL+"?verb="+verb;
-		if (MetadataPrefix) 
-		{URL = URL+"&metadataPrefix="+MetadataPrefix;}
-		else 
-		{ 
-		alert("parameter matadataPrefix is necessary");
-		formStatus = false;
+
+		if (resumptionToken){ 
+			URL = URL+"&resumptionToken="+resumptionToken;
+		}else{
+			if (MetadataPrefix) 
+			{URL = URL+"&metadataPrefix="+MetadataPrefix;}
+			else 
+			{ 
+				alert("parameter matadataPrefix is necessary");
+				formStatus = false;
+			}
+			if (from) URL = URL+"&from="+from;
+			if (until) URL = URL+"&until="+until;
+			if (set) URL = URL+"&set="+set;			
 		}
-		if (from) URL = URL+"&from="+from;
-		if (until) URL = URL+"&until="+until;
-		if (set) URL = URL+"&set="+set;
-		if (resumptionToken) URL = URL+"&resumptionToken="+resumptionToken;
 	}
 	else if (verb == "ListSets")
 	{
@@ -82,18 +87,22 @@ function submitForm()
 	else if (verb == "ListRecords")
 	{
 		URL = URL+"?verb="+verb;
-		if (MetadataPrefix) 
-		{
-			URL = URL+"&metadataPrefix="+MetadataPrefix;}
-		else 
-		{ 
-		alert("parameter matadataPrefix is necessary");
-		formStatus = false;
-		}			
-		if (from) URL = URL+"&from="+from;
-		if (until) URL = URL+"&until="+until;
-		if (set) URL = URL+"&set="+set;			
-		if (resumptionToken) URL = URL+"&resumptionToken="+resumptionToken;	
+		
+		if (resumptionToken) {
+			URL = URL+"&resumptionToken="+resumptionToken;
+		}else{
+			if (MetadataPrefix) 
+			{
+				URL = URL+"&metadataPrefix="+MetadataPrefix;}
+			else 
+			{ 
+			alert("parameter matadataPrefix is necessary");
+			formStatus = false;
+			}			
+			if (from) URL = URL+"&from="+from;
+			if (until) URL = URL+"&until="+until;
+			if (set) URL = URL+"&set="+set;	
+		}	
 	}
 	else if (verb == "GetRecord")
 	{
