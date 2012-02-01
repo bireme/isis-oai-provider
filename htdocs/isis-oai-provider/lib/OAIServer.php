@@ -477,15 +477,17 @@ class OAIServer {
                     # for each item
                     foreach ($ItemIds as $ItemId)
                     {
+
                         # if item is within range
                         if ($ListIndex >= $Args["ListStartPoint"])
                         {
+                            
                             # retrieve item
                             $Item = $this->ItemFactory->GetItem($ItemId);
 
                             # add record for item
                             $Response .= $this->GetRecordTags($Item, $Args["metadataPrefix"], $IncludeMetadata);
-                            
+
                         }
 
                         # increment count of processed items
@@ -747,7 +749,7 @@ class OAIServer {
         {
             # open metadata tag
             $Tags .= $this->FormatTag("metadata");
-            $Tags .= $Item->GetMetadata();
+            $Tags .= $Item->GetMetadata($MetadataFormat);
 
             // DELETED HANDLE OF OAI FIELDS
 
@@ -785,11 +787,13 @@ class OAIServer {
         }
 
         # if more than identifiers requested
+        /* FIX: uncomented will close ListRecords element
         if ($IncludeMetadata)
         {
             # close record tag
-            $Tags .= $this->FormatTag();
+            $Tags .= $this->FormatTag();            
         }
+        */
 
         # return tags to caller
         return $Tags;

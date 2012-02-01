@@ -14,4 +14,14 @@ $METADATAFORMATS['oai_dc'] = array( 'TagName' => 'oai_dc:dc',
 						);
 
 
+$METADATAFORMATS['isis']  = array( 'TagName' => 'isis', 
+                        'SchemaNamespace' => 'http://reddes.bvsalud.org/OAI/1.0/isis/',
+                        'SchemaDefinition' => 'http://reddes.bvsalud.org/OAI/1.0/isis.xsd',
+                        'SchemaVersion' => '',
+                        'NamespaceList' => '',
+                        'Namespaces' => array(
+                                'isis' => 'http://reddes.bvsalud.org/OAI/1.0/isis/',
+                            ),
+                        );
+
 ?>

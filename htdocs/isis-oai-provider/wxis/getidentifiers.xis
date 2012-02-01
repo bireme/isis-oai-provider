@@ -16,7 +16,7 @@
 		<!-- CGI environment -->	
 		<field action="replace" tag="1">
 			<pft>			
-				'5000 application_path'/
+				'5000 app_path'/
 				'6001 set'/
 				'6002 metadataPrefix'/
 				'6003 expression'/

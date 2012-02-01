@@ -43,7 +43,7 @@ class ISISItemFactory implements OAIItemFactory {
             $date_range_exp = '';
         }
 
-        $ItemIds = $db->getidentifiers(array('application_path' => APPLICATION_PATH, 'expression' => $date_range_exp));
+        $ItemIds = $db->getidentifiers(array('expression' => $date_range_exp));
              
         $ItemIds = explode("|", $ItemIds);
         return $ItemIds;
@@ -63,7 +63,7 @@ class ISISItemFactory implements OAIItemFactory {
             $date_range_exp = '';
         }
 
-        $ItemIds = $db->getidentifiers(array('application_path' => APPLICATION_PATH, 'expression' => $date_range_exp, 'set' => $SetSpec));
+        $ItemIds = $db->getidentifiers(array('expression' => $date_range_exp, 'set' => $SetSpec));
              
         $ItemIds = explode("|", $ItemIds);
         return $ItemIds;

@@ -13,8 +13,6 @@ class ISISItem implements OAIItem {
         $this->DBName = $id_parts[0];
 
         $this->Resource = new ISISDb($this->DBName);
-        
-
     }
 
     function GetId() {  
@@ -28,9 +26,13 @@ class ISISItem implements OAIItem {
         return $DateString;        
     }
 
-    function GetMetadata(){
+    function GetMetadata($MetadataFormat)  
+    {       
+        global $DATABASES;
 
-        return $this->Resource->search(array('expression' => $this->Id));
+        $mapping_file = $DATABASES[$this->DBName]['mapping'];
+
+        return $this->Resource->search(array('expression' => $this->Id, 'metadata_format' => $MetadataFormat, 'mapping_file' => $mapping_file));
     }
 
     function GetValue($ElementName)

@@ -13,6 +13,7 @@ class ISISDb{
     $this->dbname = $dbname;
     $this->dbpath = $DATABASES[$dbname]['path'];
     $this->wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] . $CONFIG['ENVIRONMENT']['DIRECTORY'] . 'wxis.exe/'  . $CONFIG['ENVIRONMENT']['DIRECTORY'] . 'wxis/';
+    $this->app_path = APPLICATION_PATH;
 
   }
   
@@ -40,7 +41,8 @@ class ISISDb{
   }
 
   function wxis_url ( $IsisScript, $param ) {
-    $request = "http://" . $this->wxis_host . $this->wxis_action . "?" . "IsisScript=" . $IsisScript;
+    $request = "http://" . $this->wxis_host . $this->wxis_action . "?" . "IsisScript=" . $IsisScript . "&app_path=" . $this->app_path;
+    
     if ($this->dbname != ''){
       $request.= "&database=" . $this->dbpath . "/" . $this->dbname;
     }  
