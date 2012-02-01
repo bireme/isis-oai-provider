@@ -33,7 +33,8 @@
 					</pft>
 				</parm>
 				
-				<loop>			
+				<loop>	
+					<proc>d1001d1002d1101d1102</proc>
 					<display><isisxml>*</isisxml></display>				
 				</loop>
 				<flow action="jump">END</flow>
