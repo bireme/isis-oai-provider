@@ -32,7 +32,24 @@ class ISISItem implements OAIItem {
 
         $mapping_file = $DATABASES[$this->DBName]['mapping'];
 
-        return $this->Resource->search(array('expression' => $this->Id, 'metadata_format' => $MetadataFormat, 'mapping_file' => $mapping_file));
+        $record_xml = $this->Resource->search(array('expression' => $this->Id, 'metadata_format' => $MetadataFormat, 'mapping_file' => $mapping_file));
+
+        // add CDATA to elements when work with isisxml style=1
+        if ($MetadataFormat == 'isis') {
+            $record_xml = preg_replace("/<v([0-9]+)>/","<v$1><![CDATA[",$record_xml);
+            $record_xml = preg_replace("/<\/v([0-9]+)/","]]></v$1",$record_xml);
+
+        // fix oai-dc root element and add CDATA on resuls when using I2X to mapping fields to oai-dc
+        }elseif ($MetadataFormat == 'oai_dc' && preg_match('/\.i2x/', $mapping_file )) {
+            $record_xml = preg_replace('/<oai-dc mfn=\"[0-9]+\">/','<oai-dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd" xmlns:oai-dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">',$record_xml);
+
+            $record_xml = preg_replace("/<dc:([a-z]+)>/","<dc:$1><![CDATA[",$record_xml);
+            $record_xml = preg_replace("/<\/dc:([a-z]+)/","]]></dc:$1",$record_xml);
+
+        }
+
+        return $record_xml;
+
     }
 
     function GetValue($ElementName)

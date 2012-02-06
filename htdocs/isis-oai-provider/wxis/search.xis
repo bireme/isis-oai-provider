@@ -49,11 +49,11 @@
 				</loop>
 				<flow action="jump">END</flow>
 
-				<label>ISIS2XML</label>
-				<parm name="isisxml style">2</parm>				
+			<label>ISIS2XML</label>
+			    <parm name="isisxml style">2</parm>				
 				<parm name="isisxml table"><pft>cat(v5000,'/map/',v7000)</pft></parm>
 
-				<loop>			
+				<loop>
 					<display><isisxml>*</isisxml></display>	
 				</loop>
 				<flow action="jump">END</flow>
