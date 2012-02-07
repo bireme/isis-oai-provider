@@ -27,6 +27,9 @@
 ; Field in database that contains identifier information of register.
 ;identifier_field=2
 
+; Field in database that contains datestamp information of register.
+;datestamp_field=980
+
 
 ; Configuration of direve.(mst|xrf) database.
 [direve]
@@ -37,6 +40,7 @@ mapping=direve.ini
 prefix=oai_date_
 isis_key_length=1030
 identifier_field=10
+identifier_field=507
 
 
 ;*/ ?>
