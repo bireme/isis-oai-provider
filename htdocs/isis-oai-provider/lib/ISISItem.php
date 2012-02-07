@@ -5,10 +5,11 @@ class ISISItem implements OAIItem {
     # ---- PUBLIC INTERFACE --------------------------------------------------
 
     # object constructor
-    function ISISItem($ItemId, $SearchInfo = NULL)
+    function ISISItem($ItemId, $datestamp = NULL, $SearchInfo = NULL)
     {
         # save ID for later use
         $this->Id = $ItemId;
+        $this->datestamp = $datestamp;
         $id_parts = explode('-', $ItemId);
         $this->DBName = $id_parts[0];
 
@@ -21,9 +22,8 @@ class ISISItem implements OAIItem {
 
     function GetDatestamp()
     {
-        $DateString = "0000-00-00 00:00:00";
-        if ($DateString == "0000-00-00 00:00:00") {  $DateString = date("Y-m-d");  }
-        return $DateString;        
+        if ($this->datestamp == NULL) {  $this->datestamp = date("Y-m-d");  }
+        return $this->datestamp;        
     }
 
     function GetMetadata($MetadataFormat)  
