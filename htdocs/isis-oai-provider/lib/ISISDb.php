@@ -12,27 +12,28 @@ class ISISDb{
     $this->wxis_host = $_SERVER['SERVER_NAME'];
     $this->dbname = $dbname;
     $this->dbpath = $DATABASES[$dbname]['path'];
-    $this->wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] . $CONFIG['ENVIRONMENT']['DIRECTORY'] . 'wxis.exe/'  . $CONFIG['ENVIRONMENT']['DIRECTORY'] . 'wxis/';
+    $this->wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] . 
+      $CONFIG['ENVIRONMENT']['DIRECTORY'] . 'wxis.exe/'  . $CONFIG['ENVIRONMENT']['DIRECTORY'] . 'wxis/';
     $this->app_path = APPLICATION_PATH;
 
   }
   
 
-  function get_list($param){
-    return wxis_list($param);
+  function get_list($params){
+    return wxis_list($params);
   }
   
-  function search($param){
-    return utf8_encode ($this->wxis_document_get( $this->wxis_url("search.xis", $param ) ));
+  function search($params){
+    return utf8_encode ($this->wxis_document_get( $this->wxis_url("search.xis", $params ) ));
   }
 
-  function getidentifiers($param){
-    return $this->wxis_document_post( $this->wxis_url("getidentifiers.xis",$param) );
+  function getidentifiers($params, $key_length){
+    return $this->wxis_document_post( $this->wxis_url("getidentifiers_key.xis",$params, $key_length) );
   }
 
   
-  function index($param){
-    return wxis_index($param);
+  function index($params){
+    return wxis_index($params);
   }
   
   function wxis_document_get($url){
@@ -40,16 +41,21 @@ class ISISDb{
 
   }
 
-  function wxis_url ( $IsisScript, $param ) {
+  function wxis_url ( $IsisScript, $params, $key_length = '1030' ) {
+    if ($key_length != '1030'){
+      $this->wxis_action = str_replace('wxis.exe', 'wxis'.$key_length .'.exe', $this->wxis_action);
+    }
+
     $request = "http://" . $this->wxis_host . $this->wxis_action . "?" . "IsisScript=" . $IsisScript . "&app_path=" . $this->app_path;
     
     if ($this->dbname != ''){
       $request.= "&database=" . $this->dbpath . "/" . $this->dbname;
     }  
 
-    foreach ($param as $key => $value){
+    foreach ($params as $key => $value){
         $request .= "&" . $key . "=" . $value;
     }
+print($request);
 
     return $request;
   

@@ -35,7 +35,7 @@ class ISISItemFactory implements OAIItemFactory {
     function GetItems($StartingDate = NULL, $EndingDate = NULL){
 
         $db = new ISISDb($this->DBName);
-
+        $ItemIds = '';
 
         if ($StartingDate !== NULL){
             if ($EndingDate == NULL){
@@ -46,8 +46,18 @@ class ISISItemFactory implements OAIItemFactory {
             $date_range_exp = '';
         }
 
-        $ItemIds = $db->getidentifiers(array('expression' => $date_range_exp));
-        
+        foreach ($this->Databases as $database) {
+            $params = array('expression' => $date_range_exp, 
+                'dbpath' => $database['path'],
+                'dbname' => $database['setSpec'],
+                'date_prefix' => $database['prefix'],
+                'id_field' => $database['identifier_field'],
+                'date_field' => $database['datestamp_field'],
+            );
+            $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);
+            
+        }
+       
         $ItemIds = explode("|", $ItemIds);
              
         return $ItemIds;
@@ -67,7 +77,18 @@ class ISISItemFactory implements OAIItemFactory {
             $date_range_exp = '';
         }
 
-        $ItemIds = $db->getidentifiers(array('expression' => $date_range_exp, 'set' => $SetSpec));
+        foreach ($this->Databases as $database) {
+            if ($database['setSpec'] == $SetSpec){
+                $params = array('expression' => $date_range_exp, 
+                  'dbpath' => $database['path'],
+                  'dbname' => $database['setSpec'],
+                  'date_prefix' => $database['prefix'],
+                  'id_field' => $database['identifier_field'],
+                  'date_field' => $database['datestamp_field'],
+                );
+                $ItemIds = $db->getidentifiers($params, $database['isis_key_length']);
+            }     
+        } 
              
         $ItemIds = explode("|", $ItemIds);
         return $ItemIds;
