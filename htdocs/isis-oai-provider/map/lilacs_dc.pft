@@ -1,228 +1,93 @@
 '       <oai-dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd" xmlns:oai-dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'/
 
-|		<dc:type>|v4|</dc:type>|/,
-
-|		<dc:source>|v1|</dc:source>|/,
-
-	if p(v5) then 
-|		<dc:type>|v5|</dc:type>|/,
-
-	fi,
-	if p(v6) then 
-
-|		<dc:type>|v6|</dc:type>|/,
-
-	fi,
+'		<dc:type>'if a(v9) or v9='a' or v9:'textual' then 'Text' else 'Other' fi'</dc:type>'/,
+|		<dc:source>|v1|</dc:source>|/, 
 if p(v8) then
-	(if p(v8^u) then 
-
+	(if p(v8^u) then  
 |		<dc:identifier>|v8^u|</dc:identifier>|/,
-
-	else
-
+ 	else
 |		<dc:identifier>|v8^i|</dc:identifier>|/,
-
-	fi,)
-
-fi,
-
-
-if p(v9) then 
-
-|		<dc:type>|v9|</dc:type>|/,
-
-fi,
-if p(v110) then 
-
-|		<dc:type>|v110|</dc:type>|/,
-
-fi,
-if p(v113) then 
-
-|		<dc:type>|v113|</dc:type>|/,
-
-fi,
-
+ 	fi,)
+ fi, 
 if p(v23) or p(v24) then
-
 	(if p(v23) then 
-
 |		<dc:creator><![CDATA[|v23^*|]]></dc:creator>|/,
-
         fi),
-
        (if p(v24) then
-
 |		<dc:creator><![CDATA[|v24^*|]]></dc:creator>|/,
-
         fi),                
-
     	(if p(v25) then 
-
 		if p(v25^i) then 
-
 |		<dc:title><![CDATA[|v25^*|]]></dc:title>|/,
-
 		else
-
 |		<dc:title><![CDATA[|v25^*|]]></dc:title>|/,
-
 		,fi,
-
 	,fi,)
-
 |		<dc:title><![CDATA[|v26^*|]]></dc:title>|/,
 fi,
 
-
-if p(v30) then
-
-|		<dc:identifier>|v30^*|</dc:identifier>|/,
-|		<dc:identifier>|v35^*|</dc:identifier>|/,
-
-|		<dc:identifier>|v31^*|</dc:identifier>|/,
-|		<dc:identifier>|v32^*|</dc:identifier>|/,
-
-fi,
-
-
 if p(v16) or p(v17) then
-
 	(if p(v16) then
-
 |		<dc:creator><![CDATA[|v16^*|]]></dc:creator>|/,
-
 	fi),
-
   	(if p(v17) then
-
 |		<dc:creator><![CDATA[|v17^*|]]></dc:creator>|/,
-
 	fi),
-
 	(if p(v18) then 
-
 		if p(v18^i) then 
-
 |		<dc:title><![CDATA[|v18^*|]]></dc:title>|/,
-
 		else
-
 |		<dc:title><![CDATA[|v18^*|]]></dc:title>|/,
-
 		,fi,
-
 	,fi,)
-
 |		<dc:title><![CDATA[|v19^*|]]></dc:title>|/,
-
-|		<dc:format>|v20^*|</dc:format>|/,
-
 fi,
-
 
 if p(v10) or p(v11) then
-
    (if p(v10) then
-
 |		<dc:creator><![CDATA[|v10^*|]]></dc:creator>|/,
-
    fi),
-
    (if p(v11) then
-
 |		<dc:creator><![CDATA[|v11^*|]]></dc:creator>|/,
-
    fi),                
-
    if p(v12) then 
-
 	  (if p(v12^i) then 
-
 |		<dc:title><![CDATA[|v12^*|]]></dc:title>|/,
-
 	  else
-
 |		<dc:title><![CDATA[|v12^*|]]></dc:title>|/,
-
 	 ,fi,)
-
    ,fi,
-
 |		<dc:title><![CDATA[|v13^*|]]></dc:title>|/,
-
-   if p(v14) then
-
-	   (,if p(v14^f) and p(v14^l) then
-
-|		<dc:format>|v14^f| - |v14^l|</dc:format>|/,
-
-	   else
-
-|		<dc:format>|v14^*|</dc:format>|/,
-
-	   fi,)
-
-	fi,
-
 fi,
 
-
-(|		<dc:format>|v38^*|</dc:format>|/,)
-
-
-
 (if p(v40) then
-
 |		<dc:language>|v40^*|</dc:language>|/,
-
   else
-
   	if p(v12^i) then
-
 |		<dc:language>|v12^i|</dc:language>|/,
-
     else
-
 	  	if p(v18^i) then
-
 |		<dc:language>|v18^i|</dc:language>|/,
-
 		fi,
-
 	fi,
-
 fi,)
 
-(|		<dc:type>|v58^*|</dc:type>|/,)
-|		<dc:type>|v59^*|</dc:type>|/,
-|		<dc:type>|v60^*|</dc:type>|/,
 |		<dc:publisher><![CDATA[|v62^*|]]></dc:publisher>|/,
 |		<dc:date>|v64^*|</dc:date>|/,
 (|		<dc:subject><![CDATA[|v71^*|]]></dc:subject>|/,)
 
-
 (,if p(v83)	then,
-
    	if p(v83^i) then 
-
 |		<dc:description><![CDATA[|v83^*|]]></dc:description>|/,
-
 	else
-
 		if p(v41) then
-
 |		<dc:description><![CDATA[|v83^*|]]></dc:description>|/,
-
 		,fi,
-
 	,fi,
-
 ,fi,)
 
-
-(|		<dc:subject><![CDATA[|v87|]]></dc:subject>|/,)
-
-(|		<dc:subject><![CDATA[|v88|]]></dc:subject>|/,)
+(|		<dc:subject><![CDATA[|v76^*|]]></dc:subject>|/,)
+(|		<dc:subject><![CDATA[|v87^*|]]></dc:subject>|/,)
+(|		<dc:subject><![CDATA[|v88^*|]]></dc:subject>|/,)
 
 '    </oai-dc:dc>'/
