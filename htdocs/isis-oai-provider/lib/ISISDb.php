@@ -23,12 +23,12 @@ class ISISDb{
     return wxis_list($params);
   }
   
-  function search($params){
-    return utf8_encode ($this->wxis_document_get( $this->wxis_url("search.xis", $params ) ));
+  function search($params, $key_length){
+    return utf8_encode ($this->wxis_document_get( $this->wxis_url("search.xis", $params, $key_length) ));
   }
 
   function getidentifiers($params, $key_length){
-    return $this->wxis_document_post( $this->wxis_url("getidentifiers_key.xis",$params, $key_length) );
+    return $this->wxis_document_post( $this->wxis_url("getidentifiers.xis",$params, $key_length) );
   }
 
   
@@ -43,10 +43,12 @@ class ISISDb{
 
   function wxis_url ( $IsisScript, $params, $key_length = '1030' ) {
     if ($key_length != '1030'){
-      $this->wxis_action = str_replace('wxis.exe', 'wxis'.$key_length .'.exe', $this->wxis_action);
+      $wxis_action = str_replace('wxis.exe', 'wxis'.$key_length .'.exe', $this->wxis_action);
+    }else{
+      $wxis_action = $this->wxis_action;
     }
 
-    $request = "http://" . $this->wxis_host . $this->wxis_action . "?" . "IsisScript=" . $IsisScript . "&app_path=" . $this->app_path;
+    $request = "http://" . $this->wxis_host . $wxis_action . "?" . "IsisScript=" . $IsisScript . "&app_path=" . $this->app_path;
     
     if ($this->dbname != ''){
       $request.= "&database=" . $this->dbpath . "/" . $this->dbname;
@@ -55,10 +57,8 @@ class ISISDb{
     foreach ($params as $key => $value){
         $request .= "&" . $key . "=" . $value;
     }
-print($request);
-
     return $request;
-  
+ 
  }
 
   function wxis_document_post( $url, $content = "" ){ 

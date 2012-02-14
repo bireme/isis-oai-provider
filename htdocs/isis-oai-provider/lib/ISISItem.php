@@ -31,8 +31,11 @@ class ISISItem implements OAIItem {
         global $DATABASES;
 
         $mapping_file = $DATABASES[$this->DBName]['mapping'];
+        $key_length = $DATABASES[$this->DBName]['isis_key_length'];
 
-        $record_xml = $this->Resource->search(array('expression' => $this->Id, 'metadata_format' => $MetadataFormat, 'mapping_file' => $mapping_file));
+        $record_xml = $this->Resource->search(
+                array('expression' => $this->Id, 'metadata_format' => $MetadataFormat, 
+                      'mapping_file' => $mapping_file), $key_length);
 
         // add CDATA to elements when work with isisxml style=1
         if ($MetadataFormat == 'isis') {

@@ -1,23 +1,15 @@
 <IsisScript name="search">
-
-	<function name="LoadBaseDef">
-	    <field action="import" tag="list">5000</field>
-	    <field action="replace" tag="1" split="occ"><pft>cat(v5000,'/oai-databases.php')</pft></field>
-
-	    <field action="replace" tag="5003" split="occ"><pft>,( if v1.5 = 'path=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
-	    <field action="replace" tag="5004" split="occ"><pft>,( if v1.5 = 'name=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
-	    <field action="replace" tag="5005" split="occ"><pft>,( if v1.7 = 'prefix=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
-	    <field action="replace" tag="5006" split="occ"><pft>,( if v1.17 = 'identifier_field=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
-	    <field action="replace" tag="5007" split="occ"><pft>,( if v1.16 = 'datestamp_field=' then mid(v1,instr(v1,'=')+1,size(v1))/ fi ),</pft></field>
-
-		<field action="export" tag="list">5003/5007</field>
-	</function>
-	    
+    
 	<section name="search">
 		<!-- CGI environment -->	
 		<field action="replace" tag="1">
 			<pft>			
 				'5000 app_path'/
+				'5003 dbpath'/
+				'5004 dbname'/
+				'5005 date_prefix'/
+				'5006 id_field'/
+				'5007 date_field'/
 				'6001 set'/
 				'6002 metadataPrefix'/
 				'6003 expression'/
@@ -31,44 +23,18 @@
 		<display><pft>'Content-type: text/plain'/#</pft></display>
 		<!--trace>On</trace-->
 
-        <call name="LoadBaseDef">NOW</call>
-
-		<list action="load" type="list"><pft>(if v5003 <> '' then v5003/ fi)</pft></list>
-
-		<do task="list">			
-			<field action="define" tag="1001">Isis_Current</field>
-			<field action="define" tag="1002">Isis_Itens</field>
-			<field action="define" tag="1003">Isis_Item</field>
+		<do task="search">
+			<parm name="db"><pft>v5003,'/',v5004</pft></parm>
+			<parm name="expression"><pft>if p(v6003) then v5005,replace(v6003,' OR ', s(' OR ',v5005)) else '$' fi</pft></parm>
+			<parm name="count">20</parm>
 
 			<loop>
+				<field action="import" tag="list">5004/5007</field>
 
-				<!-- import database settings -->
-				<field action="import" tag="list">5003/5007, 6001/6003</field>
-				<!-- reduce database settings variables to current item occ -->				
-				<field action="replace" tag="5003"><pft>(if f(iocc,1,0) = v1001[1]  then v5003 fi)</pft></field>
-				<field action="replace" tag="5004"><pft>(if f(iocc,1,0) = v1001[1]  then v5004 fi)</pft></field>
-				<field action="replace" tag="5005"><pft>(if f(iocc,1,0) = v1001[1]  then v5005 fi)</pft></field>
-				<field action="replace" tag="5006"><pft>(if f(iocc,1,0) = v1001[1]  then v5006 fi)</pft></field>
-				<field action="replace" tag="5007"><pft>(if f(iocc,1,0) = v1001[1]  then v5007 fi)</pft></field>
-				
-				<!-- if parameter 'set' is setted, then will be displayed only the current set -->
-				<flow action=jump><pft>if v6001 <> '' and v5004 <> v6001 then 'GO' fi</pft></flow>
-
-				<do task="search">
-					<parm name="db"><pft>v5003,'/',v5004</pft></parm>
-					<parm name="expression"><pft>if p(v6003) then v5005,replace(v6003,' OR ', s(' OR ',v5005)) else '$' fi</pft></parm>
-					<!--parm name="count">20</parm-->
-
-					<loop>
-						<field action="import" tag="list">5004/5007</field>
-	
-						<display><pft type="reload"><pft>`v5004'-'`,`v`v5006,`'^'`,`v`v5007,`'|'`</pft></pft></display>			
-					</loop>
-				</do>
-
-				<label>GO</label> 
+				<display><pft type="reload"><pft>`v5004'-'`,`v`v5006,`'^'`,`v`v5007,`'|'`</pft></pft></display>			
 			</loop>
 		</do>
+
 	</section>
 
 </IsisScript>
