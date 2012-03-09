@@ -216,4 +216,4 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </body>
 </html>
 
-<? } // END IF verb ?>
+<?php } // END IF verb ?>
