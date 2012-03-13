@@ -36,7 +36,7 @@
 name=direve
 description="Events directory"
 path=/home/projects/isis-oai-provider/bases/isis-oai-provider
-mapping=direve.ini
+mapping=direve.i2x
 prefix=oai_date_
 isis_key_length=1030
 identifier_field=10
