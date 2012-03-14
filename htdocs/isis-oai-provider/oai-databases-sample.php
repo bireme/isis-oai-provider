@@ -40,7 +40,7 @@ mapping=direve.i2x
 prefix=oai_date_
 isis_key_length=1030
 identifier_field=10
-identifier_field=507
+datestamp_field=507
 
 
 ;*/ ?>
