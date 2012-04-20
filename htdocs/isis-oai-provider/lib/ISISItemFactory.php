@@ -32,7 +32,7 @@ class ISISItemFactory implements OAIItemFactory {
 		
 	}
 	   
-    function GetItems($StartingDate = NULL, $EndingDate = NULL){
+    function GetItems($StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=NULL){
 
         $db = new ISISDb($this->DBName);
         $ItemIds = '';
