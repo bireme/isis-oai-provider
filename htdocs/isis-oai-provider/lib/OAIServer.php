@@ -332,7 +332,7 @@ class OAIServer {
             $OptArgList = NULL;
 
             # parse into list parameters
-            $Args = $this->DecodeResumptionToken($this->Args["resumptionToken"]);
+            $Args = $this->DecodeResumptionToken($this->Args["resumptionToken"]);            
         }
         else
         {
@@ -456,7 +456,8 @@ class OAIServer {
                     # get list of items that matches incoming criteria
                     $ItemIds = $this->ItemFactory->GetItems(
                         (isset($Args["from"]) ? $Args["from"] : NULL),
-                        (isset($Args["until"]) ? $Args["until"] : NULL));                    
+                        (isset($Args["until"]) ? $Args["until"] : NULL),
+                        (isset($Args["ListStartPoint"]) ? $Args["ListStartPoint"] : NULL));                
                     
                 }
 
