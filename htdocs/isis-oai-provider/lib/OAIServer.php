@@ -421,6 +421,7 @@ class OAIServer {
                 # if set requested
                 if (isset($Args["set"]))
                 {
+
                     # if OAI-SQ supported and set represents OAI-SQ query
                     if ($this->OaisqSupported && $this->IsOaisqQuery($Args["set"]))
                     {
@@ -448,7 +449,8 @@ class OAIServer {
                         $ItemIds = $this->ItemFactory->GetItemsInSet(
                             $Args["set"],
                             (isset($Args["from"]) ? $Args["from"] : NULL),
-                            (isset($Args["until"]) ? $Args["until"] : NULL));
+                            (isset($Args["until"]) ? $Args["until"] : NULL),
+                            (isset($Args["ListStartPoint"]) ? $Args["ListStartPoint"] : NULL));
                     }
                 }
                 else
@@ -475,39 +477,34 @@ class OAIServer {
                     # initialize count of processed items
                     $ListIndex = 0;
 
+                    # stop processing if we have processed max number of items in a pass
+                    $MaxItemsPerPass = 20;
+
                     # for each item
                     foreach ($ItemIds as $ItemId)
                     {
 
-                        # if item is within range
-                        if ($ListIndex >= $Args["ListStartPoint"])
-                        {
-                            
-                            # retrieve item
-                            $Item = $this->ItemFactory->GetItem($ItemId);
+                        # retrieve item
+                        $Item = $this->ItemFactory->GetItem($ItemId);
 
-                            # add record for item
-                            $Response .= $this->GetRecordTags($Item, $Args["metadataPrefix"], $IncludeMetadata);
-
-                        }
+                        # add record for item
+                        $Response .= $this->GetRecordTags($Item, $Args["metadataPrefix"], $IncludeMetadata);
 
                         # increment count of processed items
                         $ListIndex++;
 
-                        # stop processing if we have processed max number of items in a pass
-                        $MaxItemsPerPass = 20;
                         if (($ListIndex - $Args["ListStartPoint"]) >= $MaxItemsPerPass) {  break;  }
                     }
-
                     # if items left unprocessed
-                    if ($ListIndex < count($ItemIds))
+                    if ($MaxItemsPerPass >= count($ItemIds))
                     {
+                        $resumptionNewStartPoint = $Args["ListStartPoint"] + $MaxItemsPerPass;
                         # add resumption token tag
                         $Token = $this->EncodeResumptionToken((isset($Args["from"]) ? $Args["from"] : NULL),
                                                               (isset($Args["until"]) ? $Args["until"] : NULL),
                                                               (isset($Args["metadataPrefix"]) ? $Args["metadataPrefix"] : NULL),
                                                               (isset($Args["set"]) ? $Args["set"] : NULL),
-                                                              $ListIndex);
+                                                              ($resumptionNewStartPoint));
                         $Response .= $this->FormatTag("resumptionToken", $Token);
                     }
                     else

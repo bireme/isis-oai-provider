@@ -32,7 +32,7 @@ class ISISItemFactory implements OAIItemFactory {
 		
 	}
 	   
-    function GetItems($StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=NULL){
+    function GetItems($StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0){
 
         $db = new ISISDb($this->DBName);
         $ItemIds = '';
@@ -45,26 +45,25 @@ class ISISItemFactory implements OAIItemFactory {
         }else{
             $date_range_exp = '';
         }
-
-        foreach ($this->Databases as $database) {
+        $ListStartPoint += 1;
+        foreach ($this->Databases as $database) {            
             $params = array('expression' => $date_range_exp, 
                 'dbpath' => $database['path'],
                 'dbname' => $database['setSpec'],
                 'date_prefix' => $database['prefix'],
                 'id_field' => $database['identifier_field'],
                 'date_field' => $database['datestamp_field'],
+                'from' => $ListStartPoint,
             );
-            $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);
-            
-        }
-       
+            $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);                        
+        }       
         $ItemIds = explode("|", $ItemIds);
              
         return $ItemIds;
     }
 
     # retrieve IDs of items that matches set spec (only needed if sets supported)
-    function GetItemsInSet($SetSpec, $StartingDate = NULL, $EndingDate = NULL)
+    function GetItemsInSet($SetSpec, $StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0)
     {
     	$db = new ISISDb($this->DBName);
 
@@ -76,7 +75,7 @@ class ISISItemFactory implements OAIItemFactory {
         }else{
             $date_range_exp = '';
         }
-
+        $ListStartPoint += 1;
         foreach ($this->Databases as $database) {
             if ($database['setSpec'] == $SetSpec){
                 $params = array('expression' => $date_range_exp, 
@@ -85,11 +84,12 @@ class ISISItemFactory implements OAIItemFactory {
                   'date_prefix' => $database['prefix'],
                   'id_field' => $database['identifier_field'],
                   'date_field' => $database['datestamp_field'],
+                  'from' => $ListStartPoint,
                 );
                 $ItemIds = $db->getidentifiers($params, $database['isis_key_length']);
             }     
         } 
-             
+        $ItemIds = substr($ItemIds, 0, strlen($ItemIds)-1);
         $ItemIds = explode("|", $ItemIds);
         return $ItemIds;
     }
