@@ -36,6 +36,7 @@ class ISISItemFactory implements OAIItemFactory {
 
         $db = new ISISDb($this->DBName);
         $ItemIds = '';
+        $ItemsPerPage = 20;
 
         if ($StartingDate !== NULL){
             if ($EndingDate == NULL){
@@ -64,12 +65,14 @@ class ISISItemFactory implements OAIItemFactory {
 
             if($total < $ListStartPoint) {
                 $ListStartPoint = $ListStartPoint - $total;
+            } else {
+                $ListStartPoint = 0;
             }
         }       
 
         $ItemIds = array_filter(explode("|", $ItemIds));
         $ItemIds = array_slice($ItemIds, 0, $ItemsPerPage);
-             
+
         return $ItemIds;
     }
 
