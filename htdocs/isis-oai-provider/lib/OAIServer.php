@@ -496,7 +496,7 @@ class OAIServer {
                         if (($ListIndex - $Args["ListStartPoint"]) >= $MaxItemsPerPass) {  break;  }
                     }
                     # if items left unprocessed
-                    if ($MaxItemsPerPass >= count($ItemIds))
+                    if ($MaxItemsPerPass == count($ItemIds))
                     {
                         $resumptionNewStartPoint = $Args["ListStartPoint"] + $MaxItemsPerPass;
                         # add resumption token tag
