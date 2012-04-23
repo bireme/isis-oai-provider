@@ -46,7 +46,8 @@ class ISISItemFactory implements OAIItemFactory {
             $date_range_exp = '';
         }
         $ListStartPoint += 1;
-        foreach ($this->Databases as $database) {            
+        
+        foreach ($this->Databases as $database) { 
             $params = array('expression' => $date_range_exp, 
                 'dbpath' => $database['path'],
                 'dbname' => $database['setSpec'],
@@ -55,10 +56,19 @@ class ISISItemFactory implements OAIItemFactory {
                 'date_field' => $database['datestamp_field'],
                 'from' => $ListStartPoint,
             );
-            $total = $db->gettotal($params, $database['isis_key_length']);
             $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);
+
+            $curItemIds = array_filter(explode("|", $ItemIds));
+            $total = $db->gettotal($params, $database['isis_key_length']);
+            $totalFound = count($curItemIds);
+
+            if($total < $ListStartPoint) {
+                $ListStartPoint = $ListStartPoint - $total;
+            }
         }       
-        $ItemIds = explode("|", $ItemIds);
+
+        $ItemIds = array_filter(explode("|", $ItemIds));
+        $ItemIds = array_slice($ItemIds, 0, $ItemsPerPage);
              
         return $ItemIds;
     }
