@@ -55,7 +55,8 @@ class ISISItemFactory implements OAIItemFactory {
                 'date_field' => $database['datestamp_field'],
                 'from' => $ListStartPoint,
             );
-            $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);                        
+            $total = $db->gettotal($params, $database['isis_key_length']);
+            $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);
         }       
         $ItemIds = explode("|", $ItemIds);
              
