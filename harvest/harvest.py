@@ -22,6 +22,12 @@ BASE_URL = 'http://bvsms-bases.saude.bvs.br/isis-oai-provider/'
 # metadata default
 METADATA_PREFIX = 'oai_dc'
 
+# creating directory and files, if then not exists.
+if not os.path.exists(LOG_DIR):
+	os.mkdir(LOG_DIR)
+
+if not os.path.exists(DATA_DIR):
+	os.mkdir(DATA_DIR)
 
 # LOGGING CONFIGURATIONS
 LOG_FILE_ERROR = 'error_%s.log' % datetime.isoformat(datetime.now())
@@ -54,17 +60,17 @@ def harvesting_recursive(baseurl, metadata_prefix=None, set=None, token=None):
 		logger.info("getting token %s" % token)
 		url = "%s/?verb=ListRecords&resumptionToken=%s" % (baseurl, token)
 
+	old_token = token
 	data = urllib.urlopen(url).read()
 	
 	try:
 		xml = etree.parse(StringIO(data))
 	except Exception, e:
 		e = unicode(e)
-		logger.error("set: %s, " % (set, e))
-		return
+		logger.error("set: %s, %s" % (set, e))
+		return token
 	
 	root = xml.getroot()
-	old_token = token
 
 	for e in root:
 		if 'error' in e.tag:
@@ -103,19 +109,10 @@ def harvesting_recursive(baseurl, metadata_prefix=None, set=None, token=None):
 
 initial_time = time.mktime(datetime.now().timetuple())
 
-# creating directory and files, if then not exists.
-if not os.path.exists(LOG_DIR):
-	os.mkdir(LOG_DIR)
-
-if not os.path.exists(RES_TOKEN_STORAGE_FILE):
-	handle = open(RES_TOKEN_STORAGE_FILE, 'w')
-	handle.close()
-
-if not os.path.exists(DATA_DIR):
-	os.mkdir(DATA_DIR)
-
-with open(RES_TOKEN_STORAGE_FILE) as handle:
-	tokens = json.loads(handle.read())
+tokens = {}
+if os.path.exists(RES_TOKEN_STORAGE_FILE):
+	with open(RES_TOKEN_STORAGE_FILE) as handle:
+		tokens = json.loads(handle.read())
 
 # list sets
 url = "%s/?verb=ListSets" % BASE_URL
@@ -140,25 +137,22 @@ for e in root:
 if not tokens:
 	for set in sets:
 		tokens[set] = None
-	
-	with open(RES_TOKEN_STORAGE_FILE, 'w') as output:
-		output.write(json.dumps(tokens, indent=2))
 
 for set, resumption_token in tokens.items():
 	if resumption_token:
-		token = harvesting_recursive(BASE_URL, token=resumption_token)
+		token = harvesting_recursive(BASE_URL, token=resumption_token, set=set)
 	else:
 		token = harvesting_recursive(BASE_URL, METADATA_PREFIX, set)
+	
 	tokens[set] = token
-
-with open(RES_TOKEN_STORAGE_FILE, 'w') as output:
-	output.write(json.dumps(tokens, indent=2))
+	with open(RES_TOKEN_STORAGE_FILE, 'w') as output:
+		output.write(json.dumps(tokens, indent=2))
 
 endtime = time.mktime(datetime.now().timetuple())
+total_time = endtime - initial_time
+total_time_sec = total_time % 60
+total_time = int(total_time / 60)
 
-total_time = initial_time - endtime
-logger.info("elapsed time: %s." % total_time)
-
-
+logger.info("elapsed time: %sm %ss" % (total_time, total_time_sec))
 
 # TODO enviar email se der erro em alguma base
