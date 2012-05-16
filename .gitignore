@@ -1,3 +1,6 @@
 htdocs/isis-oai-provider/oai-config.php
 htdocs/isis-oai-provider/oai-databases.php
 bases/isis-oai-provider/
+harvest/log/
+harvest/data/
+harvest/tokens.json
