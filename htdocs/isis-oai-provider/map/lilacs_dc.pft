@@ -4,9 +4,9 @@
 |		<dc:source>|v1|</dc:source>|/, 
 if p(v8) then
 	(if p(v8^u) then  
-|		<dc:identifier>|v8^u|</dc:identifier>|/,
+|		<dc:identifier><![CDATA[|v8^u|]]></dc:identifier>|/,
  	else
-|		<dc:identifier>|v8^i|</dc:identifier>|/,
+|		<dc:identifier><![CDATA[|v8^i|]]></dc:identifier>|/,
  	fi,)
  fi, 
 if p(v23) or p(v24) then
