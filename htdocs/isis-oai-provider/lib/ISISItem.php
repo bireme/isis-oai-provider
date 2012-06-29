@@ -10,14 +10,14 @@ class ISISItem implements OAIItem {
         # save ID for later use
         $this->Id = $ItemId;
         $this->datestamp = $datestamp;
-        $id_parts = explode('-', $ItemId);
+        $id_parts = explode('@', $ItemId);
         $this->DBName = $id_parts[0];
 
         $this->Resource = new ISISDb($this->DBName);
     }
 
-    function GetId() {  
-        return $this->Id;  
+    function GetId() {          
+        return str_replace('@', '-', $this->Id);
     }
 
     function GetDatestamp()
@@ -34,7 +34,7 @@ class ISISItem implements OAIItem {
         $key_length = $DATABASES[$this->DBName]['isis_key_length'];
         $id_field = $DATABASES[$this->DBName]['identifier_field'];
 
-        $record_xml = $this->Resource->search(
+        $record_xml = $this->Resource->getrecord(
                 array('expression' => $this->Id . "/($id_field)", 'metadata_format' => $MetadataFormat, 
                       'mapping_file' => $mapping_file), $key_length);
 

@@ -23,8 +23,8 @@ class ISISDb{
     return wxis_list($params);
   }
   
-  function search($params, $key_length){
-    return utf8_encode ($this->wxis_document_get( $this->wxis_url("search.xis", $params, $key_length) ));
+  function getrecord($params, $key_length){
+    return utf8_encode ($this->wxis_document_get( $this->wxis_url("getrecord.xis", $params, $key_length) ));
   }
 
   function getidentifiers($params, $key_length){

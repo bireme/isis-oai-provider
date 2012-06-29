@@ -34,7 +34,7 @@
 			<loop>
 				<field action="import" tag="list">5004/5007</field>
 
-				<display><pft type="reload"><pft>`v5004'-'`,`v`v5006,`'^'`,`v`v5007,`'|'`</pft></pft></display>			
+				<display><pft type="reload"><pft>`v5004'@'`,`v`v5006,`'^'`,`v`v5007,`'|'`</pft></pft></display>			
 			</loop>
 		</do>
 
