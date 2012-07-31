@@ -249,8 +249,8 @@ class OAIServer {
         {
 
            $ItemId = $this->DecodeIdentifier($this->Args["identifier"]);
-	   #Create to show database-id
-	   $ItemDatabaseId= $this->DecodeDatabaseIdentifier($this->Args["identifier"]);
+	       #Create to show database-id
+	       $ItemDatabaseId= $this->DecodeDatabaseIdentifier($this->Args["identifier"]);
 
         }
         else

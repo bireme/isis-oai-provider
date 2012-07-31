@@ -23,6 +23,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <head>
 	<title>ISIS-OAI-PROVIDER Harvesting Interface</title>
 	<link rel="stylesheet" type="text/css" href="css/layout.css">	
+	<link rel="shortcut icon" href="images/favicon.ico"/>
 </head>
 <script type="text/javascript" src="js/functions.js"></script>
 <body marginheight="0" topmargin="0" leftmargin="0">

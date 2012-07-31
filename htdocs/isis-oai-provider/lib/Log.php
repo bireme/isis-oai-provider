@@ -117,12 +117,12 @@ class Log
 
         $fp = @fopen ($this->directory . "logerror.txt", "a+b");
         if ( !$fp ){
-            print ("Unable to open log file for update " . LOG_DIR . "logerror.txt");
+            error_log ("Unable to open log file for update " . LOG_DIR . "logerror.txt");
         }else{  
             if ( !fwrite($fp, date("Y-m-d H:i:s") . LOG_SEPARATOR . $message . "\r\n") ){  
-                print ("Unable to write in log file " . $this->directory . "logerror.txt");
+                error_log ("Unable to write in log file " . $this->directory . "logerror.txt");
             }else{
-                print ("Log error message: " . $message);
+                error_log ("Log error message: " . $message);
             }
         }
         return;
@@ -155,7 +155,5 @@ class Log
         $text = "[".date('d/m/Y h:i:s')."] - $host;$ip;$data\n";
         $this->writeFile($text);
     }
-
 }
-
 ?>
