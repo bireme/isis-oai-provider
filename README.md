@@ -8,7 +8,7 @@ The application work with PHP 5.3.3 or later.
 
 ## Instalation
 
-* Download the last version from **Downloads** link from github repository (zip or tar gz file) and
+1. Download the last version from **Downloads** link from github repository (zip or tar gz file) and
 extract the file to your server.
 Example: Creating a structure and deploy the application under server **/opt/** directory:
 
@@ -21,26 +21,18 @@ Example: Creating a structure and deploy the application under server **/opt/** 
     $ mv bireme-isis-oai-provider-53c0abc/ isis-oai-provider
 ```
 
-* Create a VirtualHost for the web application (alternatively you can copy directories for a existing VirtualHost)
+2. Deploy the aplication on the Web Server (ex. Apache Web Server)
+
+* Option A - Using a specific VirtualHost for the web application
 
 ```
     <VirtualHost *:80>
        ServerName isis-oai-provider.local
        DocumentRoot /opt/bireme/isis-oai-provider/htdocs/
 
-       <Directory "/opt/bireme/isis-oai-provider/htdocs">
-            Options +FollowSymLinks
-            AllowOverride FileInfo
-            Options Indexes ExecCGI MultiViews FollowSymLinks
-            MultiviewsMatch Handlers
-            Order allow,deny
-            Allow from all
-       </Directory>
-
        <Directory "/opt/bireme/isis-oai-provider/cgi-bin">
             Options +ExecCGI
             AllowOverride None
-            Options FollowSymLinks MultiViews
             Order deny,allow
        </Directory>
 
@@ -51,7 +43,33 @@ Example: Creating a structure and deploy the application under server **/opt/** 
     </VirtualHost>
 ```
 
-* Rename configuration files
+* Option B - Using a existing VirtualHost
+
+Assuming you have a website running you need to find the path where is located the following components:
+
+DocumentRoot  --- directory where static files and PHP scripts are located
+CGI-BIN       --- directory with execution permission for CGI scripts
+ISIS dabases  --- directory on the server where ISIS databases are located
+
+Then move/copy or create symbolic links to the isis-oai-provider directories:
+
+    Ex. Assuming a website with this directory structure:
+    /home/sites/
+               /site1/
+                     htdocs/
+                     cgi-bin/
+                     bases/
+
+   $ cd /home/sites/site1/
+   $ cd htdocs
+   $ ln -s /opt/bireme/isis-oai-provider/htdocs/isis-oai-provider/ .
+   $ cd ..
+   $ cd cgi-bin
+   $ ln -s /opt/bireme/isis-oai-provider/cgi-bin/isis-oai-provider/ .
+
+
+
+3. Rename configuration files
 
 ```
     $ cd htdocs/isis-oai-provider/
@@ -59,3 +77,9 @@ Example: Creating a structure and deploy the application under server **/opt/** 
     $ mv oai-databases-sample.php oai-databases.php
 
 ```
+
+4. To test the application call your browser and inform your server name like: **http://your_server_name/isis-oai-provider/**
+
+  Ex. http://isis-oai-provider.local/isis-oai-provider/
+
+
