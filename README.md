@@ -8,7 +8,9 @@ The application work with PHP 5.3.3 or later.
 
 ## Instalation
 
-1 Download the last version from **Downloads** link from github repository (zip or tar gz file) and
+### Download
+
+Download the last version from **Downloads** link from github repository (zip or tar gz file) and
 extract the file to your server.
 Example: Creating a structure and deploy the application under server **/opt/** directory:
 
@@ -21,9 +23,9 @@ Example: Creating a structure and deploy the application under server **/opt/** 
     $ mv bireme-isis-oai-provider-53c0abc/ isis-oai-provider
 ```
 
-2 Deploy the aplication on the Web Server (ex. Apache Web Server)
+### Deploy the aplication on the Web Server (ex. Apache Web Server)
 
-    * Option A - Using a specific VirtualHost for the web application
+* Option A - Using a specific VirtualHost for the web application
 
 ```
     <VirtualHost *:80>
@@ -43,7 +45,7 @@ Example: Creating a structure and deploy the application under server **/opt/** 
     </VirtualHost>
 ```
 
-    * Option B - Using a existing VirtualHost
+* Option B - Using a existing VirtualHost
 
 Assuming you have a website running you need to find the path where is located the following components:
 
@@ -67,8 +69,9 @@ Then move/copy or create symbolic links to the isis-oai-provider directories:
    $ ln -s /opt/bireme/isis-oai-provider/cgi-bin/isis-oai-provider/ .
 
 
+### Configuration files
 
-3 Rename configuration files
+Rename the sample configuration files
 
 ```
     $ cd htdocs/isis-oai-provider/
@@ -76,8 +79,9 @@ Then move/copy or create symbolic links to the isis-oai-provider directories:
     $ mv oai-databases-sample.php oai-databases.php
 
 ```
+### Test
 
-4 Test the application calling your browser and informing your server name like: **http://your_server_name/isis-oai-provider/**
+Test the application calling your browser and informing your server name like: **http://your_server_name/isis-oai-provider/**
 
   Ex. http://isis-oai-provider.local/isis-oai-provider/
 
