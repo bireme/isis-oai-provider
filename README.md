@@ -24,7 +24,7 @@ Example: Creating a structure and extracting application files under server **/o
     $ mv bireme-isis-oai-provider-53c0abc/ isis-oai-provider
 ```
 
-### Method 1 - Download the git repository
+### Method 2 - Clone the project git repository
 
 The advantage of this method is that you can easily update the application later, but it is necessary that the server has the package **git-core** installed.
 
