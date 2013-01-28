@@ -13,7 +13,7 @@
 ;description="Latin American and Caribbean Health Sciences"
 
 ; Path of directory that contains the database's files.
-;path=/home/moa/project/bireme/vhost/isis-oai-provider/bases/isis-oai-provider
+;path=/home/bireme/isis-oai-provider/bases/isis-oai-provider
 
 ; Filename that contains the format that will be used to do the mapping of contents. (Located in wxis/pft/ directory)
 ;mapping=lilacs.pft
@@ -28,7 +28,7 @@
 ;identifier_field=2
 
 ; Field in database that contains datestamp information of register.
-;datestamp_field=980
+;datestamp_field=93
 
 
 ; Configuration of direve.(mst|xrf) database.
