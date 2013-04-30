@@ -249,15 +249,15 @@ class OAIServer {
         {
 
            $ItemId = $this->DecodeIdentifier($this->Args["identifier"]);
-	       #Create to show database-id
-	       $ItemDatabaseId= $this->DecodeDatabaseIdentifier($this->Args["identifier"]);
+           #Create to show database-id
+           $ItemDatabaseId= $this->DecodeDatabaseIdentifier($this->Args["identifier"]);
 
         }
         else
         {
             $ItemId = NULL;
         }
- 	   
+
        if (isset($this->Args["metadataPrefix"]))
         {
             $MetadataFormat = $this->Args["metadataPrefix"];
@@ -332,7 +332,7 @@ class OAIServer {
             $OptArgList = NULL;
 
             # parse into list parameters
-            $Args = $this->DecodeResumptionToken($this->Args["resumptionToken"]);            
+            $Args = $this->DecodeResumptionToken($this->Args["resumptionToken"]);
         }
         else
         {
@@ -459,8 +459,8 @@ class OAIServer {
                     $ItemIds = $this->ItemFactory->GetItems(
                         (isset($Args["from"]) ? $Args["from"] : NULL),
                         (isset($Args["until"]) ? $Args["until"] : NULL),
-                        (isset($Args["ListStartPoint"]) ? $Args["ListStartPoint"] : NULL));                
-                    
+                        (isset($Args["ListStartPoint"]) ? $Args["ListStartPoint"] : NULL));
+
                 }
 
                 # if no items found
@@ -483,7 +483,6 @@ class OAIServer {
                     # for each item
                     foreach ($ItemIds as $ItemId)
                     {
-
                         # retrieve item
                         $Item = $this->ItemFactory->GetItem($ItemId);
 
@@ -789,7 +788,7 @@ class OAIServer {
         if ($IncludeMetadata)
         {
             # close record tag
-            $Tags .= $this->FormatTag();            
+            $Tags .= $this->FormatTag();
         }
         */
 
@@ -847,8 +846,13 @@ class OAIServer {
             # if identifier prefix looks okay
             if ($Pieces[0] == $this->RepDescr["IDPrefix"])
             {
-                # decoded value is final piece
-                $IdDB = $Pieces[1]."-".$Pieces[2];
+                $id_prefix = array_shift($Pieces);     //get and remove first element of array (prefix)
+                $id_value = array_pop($Pieces);        //get and remove last element of array  (identifier)
+                $database_name = implode('-',$Pieces); //databasename
+
+                # decoded value is final piece  (database_name + id + datestamp)
+                //$IdDB = $Pieces[1]."@".$Pieces[2] . '^' . date("Y-m-d") ;
+                $IdDB = $database_name."@". $id_value . '^' . date("Y-m-d") ;
             }
         }
 
@@ -972,7 +976,7 @@ class OAIServer {
             $Tag = str_repeat(" ", ($IndentLevel * $this->IndentSize));
 
             # add end tag to match last open tag
-	    if ($LastName !== NULL){	$Tag .= "</".$LastName.">\n";	}
+        if ($LastName !== NULL){    $Tag .= "</".$LastName.">\n";   }
         }
 
         # return formatted tag to caller
@@ -1011,30 +1015,30 @@ class OAIServer {
                 || (strpos($SetString, "OAI-SQ!") === 0)
                 || (strpos($SetString, "OAI-SQ-F|") === 0)
                 || (strpos($SetString, "OAI-SQ-F!") === 0)
-		) ? TRUE : FALSE;
+        ) ? TRUE : FALSE;
     }
 
     private function TranslateOaisqEscapes($Pieces)
     {
         # for each piece
-	for ($Index = 0;  $Index < count($Pieces);  $Index++)
-	{
-	    # replace escaped chars with equivalents
-	    $Pieces[$Index] = preg_replace_callback(
-	            "/~[a-fA-F0-9]{2,2}/",
-		    create_function(
-		    '$Matches',
-		    'for ($Index = 0;  $Index < count($Matches);  $Index++)'
-		        .'{'
-		        .'    $Replacements = chr(intval(substr($Matches[$Index], 1, 2), 16));'
-		        .'}'
-		        .'return $Replacements;'
-		    ),
-		    $Pieces[$Index]);
-	}
+    for ($Index = 0;  $Index < count($Pieces);  $Index++)
+    {
+        # replace escaped chars with equivalents
+        $Pieces[$Index] = preg_replace_callback(
+                "/~[a-fA-F0-9]{2,2}/",
+            create_function(
+            '$Matches',
+            'for ($Index = 0;  $Index < count($Matches);  $Index++)'
+                .'{'
+                .'    $Replacements = chr(intval(substr($Matches[$Index], 1, 2), 16));'
+                .'}'
+                .'return $Replacements;'
+            ),
+            $Pieces[$Index]);
+    }
 
-	# return translated array of pieces to caller
-	return $Pieces;
+    # return translated array of pieces to caller
+    return $Pieces;
     }
 
     private function ParseOaisqQuery($SetString, $FormatName)
@@ -1048,11 +1052,11 @@ class OAIServer {
             # discard first piece (OAI-SQ designator)
             array_shift($Pieces);
 
-	    # if set string contains escaped characters
-	    if (preg_match("/~[a-fA-F0-9]{2,2}/", $SetString))
-	    {
-	        $Pieces = $this->TranslateOaisqEscapes($Pieces);
-	    }
+        # if set string contains escaped characters
+        if (preg_match("/~[a-fA-F0-9]{2,2}/", $SetString))
+        {
+            $Pieces = $this->TranslateOaisqEscapes($Pieces);
+        }
 
             # for every two pieces
             $SearchParams = array();
@@ -1075,11 +1079,11 @@ class OAIServer {
             # split set string to trim off query designator
             $Pieces = explode(substr($SetString, 6, 1), $SetString, 2);
 
-	    # if set string contains escaped characters
-	    if (preg_match("/~[a-fA-F0-9]{2,2}/", $SetString))
-	    {
-	        $Pieces = $this->TranslateOaisqEscapes($Pieces);
-	    }
+        # if set string contains escaped characters
+        if (preg_match("/~[a-fA-F0-9]{2,2}/", $SetString))
+        {
+            $Pieces = $this->TranslateOaisqEscapes($Pieces);
+        }
 
             # remainder of set string is keyword search string
             $SearchParams["X-KEYWORD-X"] = $Pieces[1];
