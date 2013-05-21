@@ -5,8 +5,8 @@
 		<field action="replace" tag="1">
 			<pft>			
 				'5000 app_path'/
-				'5003 dbpath'/
-				'5004 dbname'/
+				'5003 database'/
+				'5004 setSpec'/
 				'5005 date_prefix'/
 				'5006 id_field'/
 				'5007 date_field'/
@@ -25,7 +25,7 @@
 		<!--trace>On</trace-->
 
 		<do task="search">
-			<parm name="db"><pft>v5003,'/',v5004</pft></parm>
+			<parm name="db"><pft>v5003</pft></parm>
 			<parm name="expression"><pft>if p(v6003) then v5005,replace(v6003,' OR ', s(' OR ',v5005)) else '$' fi</pft></parm>
 
             <parm name="from"><pft>if v5008 = '0' then '1' else v5008 fi</pft></parm>

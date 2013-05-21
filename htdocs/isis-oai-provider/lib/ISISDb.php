@@ -53,9 +53,6 @@ class ISISDb{
 
     $request = "http://" . $this->wxis_host . $wxis_action . "?" . "IsisScript=" . $IsisScript . "&app_path=" . $this->app_path;
     
-    if ($this->dbname != ''){
-      $request.= "&database=" . $this->dbpath . "/" . $this->dbname;
-    }  
 
     foreach ($params as $key => $value){
         $request .= "&" . $key . "=" . $value;

@@ -50,8 +50,8 @@ class ISISItemFactory implements OAIItemFactory {
         
         foreach ($this->Databases as $database) { 
             $params = array('expression' => $date_range_exp, 
-                'dbpath' => $database['path'],
-                'dbname' => $database['setSpec'],
+                'database' => $database['database'],
+                'setSpec' => $database['setSpec'],
                 'date_prefix' => $database['prefix'],
                 'id_field' => $database['identifier_field'],
                 'date_field' => $database['datestamp_field'],
@@ -93,18 +93,19 @@ class ISISItemFactory implements OAIItemFactory {
         foreach ($this->Databases as $database) {
             if ($database['setSpec'] == $SetSpec){
                 $params = array('expression' => $date_range_exp, 
-                  'dbpath' => $database['path'],
-                  'dbname' => $database['setSpec'],
+                  'database' => $database['database'],
+                  'setSpec' => $database['setSpec'],
                   'date_prefix' => $database['prefix'],
                   'id_field' => $database['identifier_field'],
                   'date_field' => $database['datestamp_field'],
                   'from' => $ListStartPoint,
-                );
+                );                
                 $ItemIds = $db->getidentifiers($params, $database['isis_key_length']);
             }     
         } 
         $ItemIds = substr($ItemIds, 0, strlen($ItemIds)-1);
         $ItemIds = explode("|", $ItemIds);
+
         return $ItemIds;
     }
 

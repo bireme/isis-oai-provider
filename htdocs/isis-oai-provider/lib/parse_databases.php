@@ -28,8 +28,8 @@ foreach($DATABASES as $database) {
 		die("O arquivo ${database['mapping']} não existe.");
 	}
 
-	$database_xrf = $database['path'] . '/' . $database['name'] . '.xrf';
-	$database_mst = $database['path'] . '/' . $database['name'] . '.mst';
+	$database_xrf = $database['database'] . '.xrf';
+	$database_mst = $database['database'] . '.mst';
 	
 	//$database_cnt = $database['path'] . '/' . $database['name'] . '.cnt';
 	
@@ -42,9 +42,9 @@ $databases = array();
 foreach($DATABASES as $key => $database) {
 	$databases[$key] = array();
 	$databases[$key]['setSpec'] = $key;
-	$databases[$key]['setName'] = $database['description'];
-	$databases[$key]['path'] = $database['path'];	
-	$databases[$key]['database'] = $database['path'] . '/' . $database['name'];
+	$databases[$key]['setName'] = $database['name'];
+	$databases[$key]['database'] = $database['database'];
+
 	$databases[$key]['mapping'] = $mapping_dir . '/' . $database['mapping'];
 	$databases[$key]['prefix'] = $database['prefix'];
 	$databases[$key]['prefix'] = $database['prefix'];	

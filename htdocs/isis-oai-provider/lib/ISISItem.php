@@ -35,7 +35,7 @@ class ISISItem implements OAIItem {
         $id_field = $DATABASES[$this->DBName]['identifier_field'];
 
         $record_xml = $this->Resource->getrecord(
-                array('expression' => $this->Id . "/($id_field)", 'metadata_format' => $MetadataFormat, 
+                array('database' => $DATABASES[$this->DBName]['database'], 'expression' => $this->Id . "/($id_field)", 'metadata_format' => $MetadataFormat, 
                       'mapping_file' => $mapping_file), $key_length);
 
         // add CDATA to elements when work with isisxml style=1

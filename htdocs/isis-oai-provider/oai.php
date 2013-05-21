@@ -36,7 +36,7 @@ foreach ($METADATAFORMATS as $name => $format ){
 $response = $server->GetResponse();
 // show XML
 header("Content-type: text/xml;");
-print $response;
+print trim($response);
 
 $enddate = time();
 $time = $enddate - $startdate;
