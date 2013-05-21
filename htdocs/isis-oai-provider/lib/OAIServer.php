@@ -588,6 +588,8 @@ class OAIServer {
 
     private function ProcessListSets()
     {
+        global $databases;
+
         # initialize response
         $Response = $this->GetResponseBeginTags();
 
@@ -626,6 +628,7 @@ class OAIServer {
                 # add set spec and set name
                 $Response .= $this->FormatTag("setSpec", $SetSpec);
                 $Response .= $this->FormatTag("setName", $SetName);
+                $Response .= $this->FormatTag("setDescription", $databases[$SetSpec]["description"]);
 
                 # close set tag
                 $Response .= $this->FormatTag();

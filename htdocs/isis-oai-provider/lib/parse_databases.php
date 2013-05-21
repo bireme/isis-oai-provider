@@ -44,7 +44,7 @@ foreach($DATABASES as $key => $database) {
 	$databases[$key]['setSpec'] = $key;
 	$databases[$key]['setName'] = $database['name'];
 	$databases[$key]['database'] = $database['database'];
-
+	$databases[$key]['description'] = $database['description'];
 	$databases[$key]['mapping'] = $mapping_dir . '/' . $database['mapping'];
 	$databases[$key]['prefix'] = $database['prefix'];
 	$databases[$key]['prefix'] = $database['prefix'];	
