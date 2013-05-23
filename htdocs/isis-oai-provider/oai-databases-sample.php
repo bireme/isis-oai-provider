@@ -3,25 +3,25 @@
 ; EXAMPLE:
 ; This is a example of database configuration.
 
-; Name of database. (This needs to be a same name of database file, includes match cases, localized in DATABASE_PATH, setted in oai-config.php)
+; Starts and describes a section for that database and identifies the logical name of that set. This information is presented in the verb ListSets and it is also part of the unique identifier for each document within the set.
 ;[lilacs]
 
-; Name of set that isis-oai-provider will be showed in ListSets verb.
+; The name variable is the label to the data set to be displayed in the ListSets verb
 ;name=LILACS
 
 ; Description of set, that will be showed in ListSets verb.
 ;description="Latin American and Caribbean Health Sciences"
 
-; Path of directory that contains the database's files.
-;path=/home/bireme/isis-oai-provider/bases/isis-oai-provider
+; Path and name of the database's files.
+;database=/home/bireme/isis-oai-provider/bases/isis-oai-provider/LILACS
 
-; Filename that contains the format that will be used to do the mapping of contents. (Located in wxis/pft/ directory)
-;mapping=lilacs.pft
+; Refers to the filename format used to do the mapping of contents. (Located in map/ directory)
+;mapping=lilacs_dc.pft
 
-; Prefix insert in field date. (This need to be inserted in .fst file that will be used to make the invertion of database) 
+; Prefix for the date field. This should be inserted in the FST file used by the invertion process.
 ;prefix=oai_date_
 
-; Key length of database invertion (LILACS is 16/60)
+; Specifies the minimum and maximum key length used to invert data. Pay attention to the version according to the database source (e.g.. LILACS is 1660, IAH is 1030)
 ;isis_key_length=1660
 
 ; Field in database that contains identifier information of register.
@@ -30,17 +30,6 @@
 ; Field in database that contains datestamp information of register.
 ;datestamp_field=93
 
-
-; Configuration of direve.(mst|xrf) database.
-[direve]
-name=direve
-description="Events directory"
-path=/home/projects/isis-oai-provider/bases/isis-oai-provider
-mapping=direve.i2x
-prefix=oai_date_
-isis_key_length=1030
-identifier_field=10
-datestamp_field=507
 
 
 ;*/ ?>
