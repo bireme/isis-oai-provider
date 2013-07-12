@@ -12,7 +12,7 @@ if(isset($_REQUEST['verb'])) {
 	require_once(APPLICATION_PATH . '/oai.php');
 } else{
 
-   $base_url =  "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'];
+   $base_url =  "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
    $base_url = str_replace("index.php", "", $base_url);
 ?>
 

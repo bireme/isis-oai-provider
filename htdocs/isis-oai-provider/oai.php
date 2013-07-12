@@ -24,10 +24,10 @@ $repository_description = array(
     "DateGranularity" => "DATE", // ??
     "IDPrefix" =>  $CONFIG['INFORMATION']['IDPREFIX'], 
     "IDDomain" => $CONFIG['INFORMATION']['IDDOMAIN'], 
-    "BaseURL" => "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'],
+    "BaseURL" => "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'],
 );
 
-$server = new OAIServer($repository_description, &$item_factory, TRUE, 0);
+$server = new OAIServer($repository_description, $item_factory, TRUE, 0);
 
 foreach ($METADATAFORMATS as $name => $format ){
 	$server->AddFormat($name, $format['TagName'], $format['SchemaNamespace'], $format['SchemaDefinition'],  $format['SchemaVersion'], $format['NamespaceList'], null, array() );	

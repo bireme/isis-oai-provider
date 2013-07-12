@@ -9,7 +9,7 @@ class ISISDb{
   function ISISDb($dbname) {
     global $CONFIG, $DATABASES;
     
-    $this->wxis_host = $_SERVER['SERVER_NAME'];
+    $this->wxis_host = $_SERVER['HTTP_HOST'];
     $this->dbname = $dbname;
     $this->dbpath = $DATABASES[$dbname]['path'];
     $this->wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] . 
