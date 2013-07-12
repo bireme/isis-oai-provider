@@ -57,7 +57,7 @@ else
 |		<dc:creator><![CDATA[|v24^*|]]></dc:creator>|/,
          fi),
       else
-'                </dc:creator>'/,
+'                <dc:creator/>'/,
       fi,
    fi,
 fi,
