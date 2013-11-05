@@ -204,6 +204,8 @@ class OAIServer {
         $Response .= $this->FormatTag("repositoryName", $this->RepDescr["Name"]);
         $Response .= $this->FormatTag("baseURL", $this->RepDescr["BaseURL"]);
         $Response .= $this->FormatTag("protocolVersion", "2.0");
+        $Response .= $this->FormatTag("applicationVersion", $this->RepDescr["AppVersion"]);
+
         foreach ($this->RepDescr["AdminEmail"] as $AdminEmail)
         {
             $Response .= $this->FormatTag("adminEmail", $AdminEmail);

@@ -10,6 +10,7 @@ require_once(APPLICATION_PATH . '/lib/OAIServer.php');
 require_once(APPLICATION_PATH . '/lib/ISISItemFactory.php');
 require_once(APPLICATION_PATH . '/lib/ISISItem.php');
 require_once(APPLICATION_PATH . '/lib/ISISDb.php');
+require_once(APPLICATION_PATH . '/lib/app_version.php');
 
 // default verb: Identify
 $verb = ($_REQUEST['verb'] == "")? "Identify" : $_REQUEST['verb'];
@@ -25,6 +26,7 @@ $repository_description = array(
     "IDPrefix" =>  $CONFIG['INFORMATION']['IDPREFIX'], 
     "IDDomain" => $CONFIG['INFORMATION']['IDDOMAIN'], 
     "BaseURL" => "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'],
+    "AppVersion" => APPLICATION_VERSION,
 );
 
 $server = new OAIServer($repository_description, $item_factory, TRUE, 0);
