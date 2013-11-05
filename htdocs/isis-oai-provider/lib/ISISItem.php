@@ -23,6 +23,9 @@ class ISISItem implements OAIItem {
     function GetDatestamp()
     {
         if ($this->datestamp == NULL) {  $this->datestamp = date("Y-m-d");  }
+        if (date('Y-m-d', strtotime($this->datestamp)) != $this->datestamp) {
+                $this->datestamp = date('Y-m-d', strtotime($this->datestamp));
+        }
         return $this->datestamp;        
     }
 
