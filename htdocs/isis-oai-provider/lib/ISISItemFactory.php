@@ -33,10 +33,11 @@ class ISISItemFactory implements OAIItemFactory {
 	}
 	   
     function GetItems($StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0){
+        global $CONFIG;
 
         $db = new ISISDb($this->DBName);
         $ItemIds = '';
-        $ItemsPerPage = 20;
+        $ItemsPerPage = $CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'];
 
         if ($StartingDate !== NULL){
             if ($EndingDate == NULL){
@@ -56,6 +57,7 @@ class ISISItemFactory implements OAIItemFactory {
                 'id_field' => $database['identifier_field'],
                 'date_field' => $database['datestamp_field'],
                 'from' => $ListStartPoint,
+                'count' => $ItemsPerPage,
             );
             $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);
 
@@ -79,7 +81,10 @@ class ISISItemFactory implements OAIItemFactory {
     # retrieve IDs of items that matches set spec (only needed if sets supported)
     function GetItemsInSet($SetSpec, $StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0)
     {
+        global $CONFIG;
+
     	$db = new ISISDb($this->DBName);
+        $ItemsPerPage = $CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'];
 
         if ($StartingDate !== NULL){
             if ($EndingDate == NULL){
@@ -99,6 +104,7 @@ class ISISItemFactory implements OAIItemFactory {
                   'id_field' => $database['identifier_field'],
                   'date_field' => $database['datestamp_field'],
                   'from' => $ListStartPoint,
+                  'count' => $ItemsPerPage,                  
                 );                
                 $ItemIds = $db->getidentifiers($params, $database['isis_key_length']);
             }     

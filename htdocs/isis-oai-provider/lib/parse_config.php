@@ -10,6 +10,10 @@ if(!file_exists($config_file)) {
 
 $CONFIG = parse_ini_file($config_file, true);
 
+if ( !isset($CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS']) ){
+    $CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'] = 20;
+}
+
 define('LOG_DIR', $CONFIG['ENVIRONMENT']['DATABASE_PATH'] . $CONFIG['ENVIRONMENT']['DIRECTORY'] . '/log/');
 
 // Log name example 201111.log

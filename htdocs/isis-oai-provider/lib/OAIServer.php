@@ -313,6 +313,8 @@ class OAIServer {
 
     private function ProcessListRecords($IncludeMetadata)
     {
+        global $CONFIG; 
+        
         # set request type
         if ($IncludeMetadata)
         {
@@ -480,7 +482,7 @@ class OAIServer {
                     $ListIndex = 0;
 
                     # stop processing if we have processed max number of items in a pass
-                    $MaxItemsPerPass = 20;
+                    $MaxItemsPerPass = $CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'];
 
                     # for each item
                     foreach ($ItemIds as $ItemId)

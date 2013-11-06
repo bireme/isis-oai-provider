@@ -11,6 +11,7 @@
 				'5006 id_field'/
 				'5007 date_field'/
                 '5008 from'/
+                '5009 count'/
 				'6001 set'/
 				'6002 metadataPrefix'/
 				'6003 expression'/
@@ -29,7 +30,7 @@
 			<parm name="expression"><pft>if p(v6003) then v5005,replace(v6003,' OR ', s(' OR ',v5005)) else '$' fi</pft></parm>
 
             <parm name="from"><pft>if v5008 = '0' then '1' else v5008 fi</pft></parm>
-			<parm name="count">20</parm>
+			<parm name="count"><pft>v5009</pft></parm>
 
 			<loop>
 				<field action="import" tag="list">5004/5007</field>
