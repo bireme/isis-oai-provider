@@ -17,9 +17,12 @@
 		<display><pft>'Content-type: text/xml'/#</pft></display>
 		<do task="search">
 			<parm name="db"><pft>v6001</pft></parm>
+
+            <!-- apply character control gizmo to avoid conversion errors -->
+            <parm name="gizmo"><pft>v5000,'/gizmo/gnoctrl'</pft></parm>
+
 			<field action="replace" tag="6002" split="occ"><pft>proc('Gsplit/clean=6002=@')</pft></field>
 			<field action="replace" tag="6022"><pft>left(v6002[2],instr(v6002[2],'/')-1)</pft></field>
-
 
 			<!-- search by id_number/(inverted field) OR ID=id_number OR ID_id_number -->			
 			<parm name="expression"><pft>v6002[2], ' OR ID=',v6022,' OR ID_',v6022</pft></parm>
