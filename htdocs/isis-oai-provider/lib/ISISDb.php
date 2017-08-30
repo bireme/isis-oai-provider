@@ -82,7 +82,7 @@ class ISISDb{
 
     // Generate the request header
       $ReqHeader =
-        "POST $path HTTP/1.1\r\n".
+        "POST $path HTTP/1.0\r\n".
         "Host: $host\r\n".
         "User-Agent: PostIt\r\n".
         "Content-Type: application/x-www-form-urlencoded\r\n".
